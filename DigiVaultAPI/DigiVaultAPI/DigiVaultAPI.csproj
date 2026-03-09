@@ -23,6 +23,9 @@
 
     <!-- FluentValidation -->
     <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
+
+    <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.1" />
   </ItemGroup>
 
 </Project>

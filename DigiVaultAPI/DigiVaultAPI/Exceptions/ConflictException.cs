@@ -1,6 +1,8 @@
 namespace DigiVaultAPI.Exceptions;
 
-public class ConflictException
+public class ConflictException : Exception
 {
-    
+    public ConflictException(string message) : base(message)
+    {
+    }
 }
