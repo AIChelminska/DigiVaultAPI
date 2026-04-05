@@ -1,0 +1,39 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: digivault-postgres
+    environment:
+      POSTGRES_DB: DigiVaultDb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres123
+    ports:
+      - "5433:5432"
+    volumes:
+      - 2daeb781040b489362b2c29bcf51d30097835a6572901adb96eaf9ba31dea519:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d DigiVaultDb"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  api:
+    build:
+      context: ./DigiVaultAPI/DigiVaultAPI
+      dockerfile: Dockerfile
+    container_name: digivault-api
+    ports:
+      - "8080:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Host=postgres;Port=5432;Database=DigiVaultDb;Username=postgres;Password=postgres123
+      - Jwt__Key=DigiVaultSuperTajnyKluczKtoryMusiBycDlugi1234567890!
+      - Jwt__Issuer=DigiVaultAPI
+      - Jwt__Audience=DigiVaultMobile
+      - Jwt__ExpiryMinutes=60
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+volumes:
+  2daeb781040b489362b2c29bcf51d30097835a6572901adb96eaf9ba31dea519:
+    external: true

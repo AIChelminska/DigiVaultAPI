@@ -1,6 +1,7 @@
 namespace DigiVaultAPI.Features.Wishlist.Services;
 
-public class IWishlistService
+public interface IWishlistService
 {
-    
+    Task AddToWishlist(int idUser, int idCourse);
+    Task RemoveFromWishlist(int idUser, int idCourse);
 }

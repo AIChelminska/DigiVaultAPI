@@ -14,6 +14,7 @@ public interface ICourseProvider
     Task<List<Course>> GetTopRatedCourses(int limit);
     Task<List<Course>> GetSellerCourses(int idUser, int page, int pageSize);
     Task<int> GetSellerCoursesCount(int idUser);
+    Task<List<Course>> GetUserCourses(int idUser);
 
     // Commands
     Task<int> CreateCourse(Course course);

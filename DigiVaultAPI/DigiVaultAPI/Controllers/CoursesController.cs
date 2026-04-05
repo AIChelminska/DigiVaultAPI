@@ -1,6 +1,8 @@
 using DigiVaultAPI.Features.Courses.Messages.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;   
+using System.Security.Claims;
 
 namespace DigiVaultAPI.Controllers;
 
@@ -34,4 +36,13 @@ public class CoursesController(IMediator mediator) : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetById([FromRoute] int idCourse)
         => Ok(await mediator.Send(new GetCourseByIdQuery { IdCourse = idCourse }));
+
+    [Authorize]
+    [HttpGet("purchased")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task<IActionResult> GetPurchasedCourses()
+    {
+        var idUser = int.Parse(User.FindFirstValue("IdUser"));
+        return Ok(await mediator.Send(new GetUserCoursesQuery { IdUser = idUser }));
+    }
 }

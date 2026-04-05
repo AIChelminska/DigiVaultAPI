@@ -30,4 +30,8 @@
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Features\Courses\Validators\" />
+  </ItemGroup>
+
 </Project>

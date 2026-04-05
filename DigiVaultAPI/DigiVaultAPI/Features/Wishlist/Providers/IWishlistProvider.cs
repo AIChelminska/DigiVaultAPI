@@ -1,6 +1,7 @@
+using DigiVaultAPI.Models;
 namespace DigiVaultAPI.Features.Wishlist.Providers;
 
-public class IWishlistProvider
+public interface IWishlistProvider
 {
-    
+    Task<IEnumerable<Course>> GetWishlistItemsAsync(int idUser);
 }

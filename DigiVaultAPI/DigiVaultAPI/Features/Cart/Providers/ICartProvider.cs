@@ -2,7 +2,7 @@ using DigiVaultAPI.Models;
 
 namespace DigiVaultAPI.Features.Cart.Providers;
 
-public interface ICardProvider
+public interface ICartProvider
 {
-    Task<>> GetCartItems(int idUser);
+    Task<IEnumerable<Course>> GetCartItems(int idUser);
 }

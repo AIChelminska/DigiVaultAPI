@@ -1,6 +1,8 @@
+using DigiVaultAPI.Models;
+
 namespace DigiVaultAPI.Features.Categories.Providers;
 
-public class ICategoryProvider
+public interface ICategoryProvider
 {
-    
+    Task<List<Category>> GetCategories();
 }

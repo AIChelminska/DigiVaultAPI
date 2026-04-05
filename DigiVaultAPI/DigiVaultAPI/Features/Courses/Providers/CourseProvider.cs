@@ -135,6 +135,20 @@ public class CourseProvider : ICourseProvider
         return courses;
     }
 
+    public async Task<List<Course>> GetUserCourses(int idUser)
+    {
+        var courses = await _context.UserCourses
+            .Include(uc => uc.Course)
+                .ThenInclude(c => c.User)
+            .Include(uc => uc. Course)
+                .ThenInclude(c => c.Category)
+            .Where(uc => uc.IdUser == idUser)
+            .Select(uc => uc.Course)
+            .ToListAsync();
+
+        return courses;
+    }
+
     public async Task<List<Course>> GetSellerCourses(int idUser, int page, int pageSize)
     {
         // Wszystkie statusy — autor widzi swoje ukryte i usunięte kursy też

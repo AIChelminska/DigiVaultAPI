@@ -1,6 +1,9 @@
-namespace DigiVaultAPI.Features.Wishlist.Messages.Queries;
+using DigiVaultAPI.Features.Courses.Messages.DTOs;
+using MediatR;
 
-public class GetCartQuery
+namespace DigiVaultAPI.Features.Cart.Messages.Queries;
+
+public class GetCartQuery : IRequest<List<CourseListDto>>
 {
-    
+    public int IdUser { get; set; }  
 }

@@ -5,6 +5,18 @@ using DigiVaultAPI.Features.Auth.Services;
 using DigiVaultAPI.Features.Courses.Mappings;
 using DigiVaultAPI.Features.Courses.Providers;
 using DigiVaultAPI.Features.Courses.Services;
+using DigiVaultAPI.Features.Categories.Providers;
+using DigiVaultAPI.Features.Wishlist.Providers;
+using DigiVaultAPI.Features.Wishlist.Services;
+using DigiVaultAPI.Features.Cart.Providers;
+using DigiVaultAPI.Features.Cart.Services;
+using DigiVaultAPI.Features.Orders.Providers;
+using DigiVaultAPI.Features.Orders.Services;
+using DigiVaultAPI.Features.Profile.Providers;
+using DigiVaultAPI.Features.Profile.Services;
+using DigiVaultAPI.Features.Review.Providers;
+using DigiVaultAPI.Features.Review.Services;
+using DigiVaultAPI.Features.Reports.Services;
 using Mapster;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -79,6 +91,32 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<ICourseProvider, CourseProvider>();
 builder.Services.AddScoped<ICourseService, CourseService>();
 
+//Categories
+builder.Services.AddScoped<ICategoryProvider, CategoryProvider>();
+
+//Wishlist
+builder.Services.AddScoped<IWishlistProvider, WishlistProvider>();
+builder.Services.AddScoped<IWishlistService, WishlistService>();
+
+//Cart
+builder.Services.AddScoped<ICartProvider, CartProvider>();
+builder.Services.AddScoped<ICartService, CartService>();
+
+//Orders
+builder.Services.AddScoped<IOrderProvider, OrderProvider>();
+builder.Services.AddScoped<IOrderService, OrderService>();
+
+//Profile
+builder.Services.AddScoped<IProfileProvider, ProfileProvider>();
+builder.Services.AddScoped<IProfileService, ProfileService>();
+
+//Review
+builder.Services.AddScoped<IReviewProvider, ReviewProvider>();
+builder.Services.AddScoped<IReviewService, ReviewService>();
+
+//Reports
+builder.Services.AddScoped<IReportService, ReportService>();
+
 // JWT
 var jwtKey      = builder.Configuration["Jwt:Key"]!;
 var jwtIssuer   = builder.Configuration["Jwt:Issuer"]!;
@@ -103,7 +141,18 @@ builder.Services.AddAuthorization();
 
 // ── APP ───────────────────────────────────────────────────────────────────────
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll",
+        policy => policy
+            .AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader());
+});
+
 var app = builder.Build();
+
+app.UseCors("AllowAll");
 
 // Automatyczne migracje przy starcie
 using (var scope = app.Services.CreateScope())
