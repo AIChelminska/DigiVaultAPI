@@ -19,13 +19,16 @@ public class OrderService : IOrderService
     await using var transaction = await _context.Database.BeginTransactionAsync();
     try
     {
+        //ide do wozka usera
         var cartItems = await _context.CartItems
         .Where(ci => ci.IdUser == idUser)
         .Include(ci => ci.Course)
+            .ThenInclude(c => c.User)
         .ToListAsync();
 
         if(!cartItems.Any()) throw new ConflictException("Cart is empty");
 
+        //tworze nowe zamowienie
         var order = new Order
         {
             IdUser = idUser,
@@ -47,6 +50,13 @@ public class OrderService : IOrderService
                 Price = cartItem.Course.Price,
                 CommissionRate = settings.CommissionRate,
             };
+
+            var commission = cartItem.Course.Price * settings.CommissionRate;
+            var authorEarnings = cartItem.Course.Price - commission;
+
+            cartItem.Course.User.Balance += authorEarnings;
+            settings.PlatformBalance += commission; 
+            cartItem.Course.SalesCount += 1;
 
             _context.OrderItems.Add(orderItem);
         

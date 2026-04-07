@@ -20,6 +20,11 @@ public class AdminController(IMediator mediator) : ControllerBase
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<IActionResult> SetAsActiveUser([FromBody] SetAsActiveUserCommand command)
         { await mediator.Send(command); return NoContent(); }
+
+    [HttpPost("users/set-as-not-active")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    public async Task<IActionResult> SetAsNotActiveUser([FromBody] SetAsNotActiveCommand command)
+        { await mediator.Send(command); return NoContent(); }
 }
 
 
