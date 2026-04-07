@@ -1,0 +1,22 @@
+using DigiVaultAPI.Features.Admin.Messages.Queries;
+using DigiVaultAPI.Features.Admin.Providers;
+using DigiVaultAPI.Features.Admin.Messages.DTOs;
+using MediatR;
+
+namespace DigiVaultAPI.Features.Admin.Handlers.Queries;
+
+public class GetUsersHandler : IRequestHandler<GetUsersQuery, IEnumerable<AdminUserDto>>
+{
+    private readonly IUsersProvider _provider;
+
+    public GetUsersHandler(IUsersProvider provider)
+    {
+        _provider = provider;
+    }
+
+    public async Task<IEnumerable<AdminUserDto>> Handle(GetUsersQuery query, CancellationToken cancellationToken)
+    {
+        var users = await _provider.GetUsers();
+        return users;
+    }
+}

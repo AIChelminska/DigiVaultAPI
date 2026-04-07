@@ -19,6 +19,8 @@ using DigiVaultAPI.Features.Review.Services;
 using DigiVaultAPI.Features.Reports.Services;
 using DigiVaultAPI.Features.Notifications.Providers;
 using DigiVaultAPI.Features.Notifications.Services;
+using DigiVaultAPI.Features.Admin.Providers;
+using DigiVaultAPI.Features.Admin.Services;
 using Mapster;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -122,6 +124,10 @@ builder.Services.AddScoped<IReportService, ReportService>();
 //Notifications
 builder.Services.AddScoped<INotificationProvider, NotificationProvider>();
 builder.Services.AddScoped<INotificationService, NotificationService>();
+
+//Admin
+builder.Services.AddScoped<IUsersProvider, UsersProvider>();
+builder.Services.AddScoped<IAdminService, AdminService>();
 
 // JWT
 var jwtKey      = builder.Configuration["Jwt:Key"]!;
