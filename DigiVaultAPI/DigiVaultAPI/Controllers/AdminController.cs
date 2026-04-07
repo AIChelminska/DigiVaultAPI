@@ -1,4 +1,5 @@
 using DigiVaultAPI.Features.Admin.Messages.Queries;
+using DigiVaultAPI.Features.Admin.Messages.Commands;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -16,9 +17,9 @@ public class AdminController(IMediator mediator) : ControllerBase
         => Ok(await mediator.Send(new GetUsersQuery()));
 
     [HttpPost("users/set-as-active")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<IActionResult> SetAsActiveUser([FromBody] SetAsActiveUserCommand command)
-        => Ok(await mediator.Send(command));
+        { await mediator.Send(command); return NoContent(); }
 }
 
 

@@ -17,4 +17,6 @@ public class SetAsActiveHandler : IRequestHandler<SetAsActiveUserCommand>
     {
         await _adminService.SetAsActiveUser(command.IdUser);
     }
+
+    
 }

@@ -20,4 +20,12 @@ public class AdminService : IAdminService
         user.IsActive = true;
         await _context.SaveChangesAsync();
     }
+
+    public async Task SetAsNotActiveUser(int idUser)
+    {
+        var user = await _context.Users.FirstOrDefaultAsync(u => u.IdUser == idUser);
+        if (user == null) throw new NotFoundException("User not found");
+        user.IsActive = false;
+        await _context.SaveChangesAsync();
+    }
 }
