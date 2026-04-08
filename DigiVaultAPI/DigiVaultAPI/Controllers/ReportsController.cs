@@ -12,6 +12,7 @@ public class ReportsController(IMediator mediator) : ControllerBase
 {
     
     [HttpPost]
+    [Authorize]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]

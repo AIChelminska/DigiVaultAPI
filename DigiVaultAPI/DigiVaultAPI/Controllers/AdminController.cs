@@ -3,6 +3,7 @@ using DigiVaultAPI.Features.Admin.Messages.Commands;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using DigiVaultAPI.Features.Courses.Messages.Queries;
 
 namespace DigiVaultAPI.Controllers;
 
@@ -25,6 +26,11 @@ public class AdminController(IMediator mediator) : ControllerBase
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<IActionResult> SetAsNotActiveUser([FromBody] SetAsNotActiveCommand command)
         { await mediator.Send(command); return NoContent(); }
+
+    [HttpGet("courses")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task<IActionResult> GetCourses([FromQuery] GetCoursesQuery query)
+    => Ok(await mediator.Send(query));    
 }
 
 

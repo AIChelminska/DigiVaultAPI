@@ -13,12 +13,13 @@ public class CourseProvider : ICourseProvider
         _context = context;
     }
 
-    public async Task<List<Course>> GetCourses(string? search, int? idCategory, decimal? minPrice, decimal? maxPrice, string? sortBy, int page, int pageSize)
+    public async Task<List<Course>> GetCourses(string? search, int? idCategory, decimal? minPrice, decimal? maxPrice, string? sortBy, int page, int pageSize, bool includeHidden = false)
     {
+
         var query = _context.Courses
             .Include(c => c.User)
             .Include(c => c.Category)
-            .Where(c => c.IsActive && c.IsVisible);
+            .Where(c => includeHidden || (c.IsActive && c.IsVisible));
 
         if (!string.IsNullOrWhiteSpace(search))
         {
@@ -53,10 +54,10 @@ public class CourseProvider : ICourseProvider
         return courses;
     }
 
-    public async Task<int> GetCoursesCount(string? search, int? idCategory, decimal? minPrice, decimal? maxPrice)
+    public async Task<int> GetCoursesCount(string? search, int? idCategory, decimal? minPrice, decimal? maxPrice, bool includeHidden = false)
     {
         var query = _context.Courses
-            .Where(c => c.IsActive && c.IsVisible);
+            .Where(c => includeHidden || (c.IsActive && c.IsVisible));
 
         if (!string.IsNullOrWhiteSpace(search))
         {

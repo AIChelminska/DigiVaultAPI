@@ -1,6 +1,7 @@
 using DigiVaultAPI.Features.Review.Messages.DTOs;
 using DigiVaultAPI.Features.Review.Messages.Queries;
 using DigiVaultAPI.Features.Review.Providers;
+using Mapster;
 using MediatR;
 
 namespace DigiVaultAPI.Features.Review.Handlers.Queries;
@@ -17,6 +18,6 @@ public class GetReviewByIdHandler : IRequestHandler<GetReviewByIdQuery, IEnumera
     public async Task<IEnumerable<ReviewDto>> Handle(GetReviewByIdQuery query, CancellationToken cancellationToken)
     {
         var reviews = await _provider.GetReviewById(query.IdCourse);
-        return reviews;
+        return reviews.Adapt<IEnumerable<ReviewDto>>();
     }
 }

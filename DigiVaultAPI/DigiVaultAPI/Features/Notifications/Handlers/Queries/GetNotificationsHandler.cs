@@ -1,6 +1,7 @@
+using DigiVaultAPI.Features.Notifications.Messages.DTOs;
 using DigiVaultAPI.Features.Notifications.Messages.Queries;
 using DigiVaultAPI.Features.Notifications.Providers;
-using DigiVaultAPI.Features.Notifications.Messages.DTOs;
+using Mapster;
 using MediatR;
 
 namespace DigiVaultAPI.Features.Notifications.Handlers.Queries;
@@ -16,6 +17,7 @@ public class GetNotificationsHandler : IRequestHandler<GetNotificationsQuery, IE
 
     public async Task<IEnumerable<NotificationDto>> Handle(GetNotificationsQuery query, CancellationToken cancellationToken)
     {
-        return await _provider.GetNotifications(query.IdUser);
+        var notifications = await _provider.GetNotifications(query.IdUser);
+        return notifications.Adapt<IEnumerable<NotificationDto>>();
     }
 }

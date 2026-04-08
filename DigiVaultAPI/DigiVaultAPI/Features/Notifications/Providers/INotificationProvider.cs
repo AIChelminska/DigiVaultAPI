@@ -1,8 +1,8 @@
-using DigiVaultAPI.Features.Notifications.Messages.DTOs;
+using DigiVaultAPI.Models;
 
 namespace DigiVaultAPI.Features.Notifications.Providers;
 
 public interface INotificationProvider
 {
-    Task<IEnumerable<NotificationDto>> GetNotifications(int idUser);
+    Task<List<Notification>> GetNotifications(int idUser);
 }

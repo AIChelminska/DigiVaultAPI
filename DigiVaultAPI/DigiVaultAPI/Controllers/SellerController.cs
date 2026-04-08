@@ -8,7 +8,7 @@ namespace DigiVaultAPI.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-[Authorize]
+[Authorize(Roles = "Worker")]
 public class SellerController(IMediator mediator) : ControllerBase
 {
     [HttpGet("courses")]

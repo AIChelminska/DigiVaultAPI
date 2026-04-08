@@ -1,7 +1,6 @@
 using DigiVaultAPI.Data;
-using DigiVaultAPI.Features.Notifications.Messages.DTOs;
+using DigiVaultAPI.Models;
 using Microsoft.EntityFrameworkCore;
-using Mapster;
 
 namespace DigiVaultAPI.Features.Notifications.Providers;
 
@@ -14,11 +13,10 @@ public class NotificationProvider : INotificationProvider
         _context = context;
     }
 
-    public async Task<IEnumerable<NotificationDto>> GetNotifications(int idUser)
+    public async Task<List<Notification>> GetNotifications(int idUser)
     {
-        var notifications = await _context.Notifications
+        return await _context.Notifications
             .Where(n => n.IdUser == idUser)
             .ToListAsync();
-        return notifications.Adapt<IEnumerable<NotificationDto>>();
     }
 }

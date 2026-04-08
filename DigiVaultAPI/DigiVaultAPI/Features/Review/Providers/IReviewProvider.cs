@@ -1,8 +1,8 @@
-using DigiVaultAPI.Features.Review.Messages.DTOs;
+using DigiVaultAPI.Models;
 
 namespace DigiVaultAPI.Features.Review.Providers;
 
 public interface IReviewProvider
 {
-    Task<IEnumerable<ReviewDto>> GetReviewById(int idCourse);
+    Task<List<Review>> GetReviewById(int idCourse);
 }

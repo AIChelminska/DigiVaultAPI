@@ -1,0 +1,16 @@
+using DigiVaultAPI.Features.Admin.Messages.DTOs;
+using DigiVaultAPI.Models;
+using Mapster;
+
+namespace DigiVaultAPI.Features.Admin.Mapping;
+
+public class AdminMappingConfig : IRegister
+{
+    public void Register(TypeAdapterConfig config)
+    {
+        config.NewConfig<Order, AdminOrdersDto>()
+            .Map(dest => dest.FullName, src => src.User.FirstName + " " + src.User.LastName)
+            .Map(dest => dest.Email, src => src.User.Email)
+            .Map(dest => dest.ItemsCount, src => src.OrderItems.Count);
+    }
+}
