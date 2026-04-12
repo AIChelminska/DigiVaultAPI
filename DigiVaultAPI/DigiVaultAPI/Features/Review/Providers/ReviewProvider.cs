@@ -1,5 +1,6 @@
 using DigiVaultAPI.Data;
-using DigiVaultAPI.Models;
+using DigiVaultAPI.Features.Review.Messages.DTOs;
+using Mapster;
 using Microsoft.EntityFrameworkCore;
 
 namespace DigiVaultAPI.Features.Review.Providers;
@@ -13,11 +14,12 @@ public class ReviewProvider : IReviewProvider
         _context = context;
     }
 
-    public async Task<List<Review>> GetReviewById(int idCourse)
+    public async Task<IEnumerable<ReviewDto>> GetReviewById(int idCourse)
     {
-        return await _context.Reviews
+        var reviews = await _context.Reviews
             .Include(r => r.User)
             .Where(r => r.IdCourse == idCourse)
             .ToListAsync();
+        return reviews.Adapt<IEnumerable<ReviewDto>>();
     }
 }

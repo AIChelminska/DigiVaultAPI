@@ -1,30 +1,30 @@
 using DigiVaultAPI.Data;
 using DigiVaultAPI.Models;
 using Microsoft.EntityFrameworkCore;
+using DigiVaultAPI.Features.Admin.Messages.DTOs;
 
 namespace DigiVaultAPI.Features.Admin.Providers;
 
-public class UsersProvider : IUsersProvider
+public class AdminProvider : IAdminProvider
 {
     private readonly DigiVaultDbContext _context;
 
-    public UsersProvider(DigiVaultDbContext context)
+    public AdminProvider(DigiVaultDbContext context)
     {
         _context = context;
     }
 
-    public async Task<List<User>> GetUsers()
+    public async Task<IEnumerable<User>> GetUsers()
     {
         return await _context.Users.ToListAsync();
     }
 
-    public async Task<List<Order>> GetOrders(int page, int pageSize, string? search, DateTime? dateFrom, DateTime? dateTo)
+    public async Task<IEnumerable<Order>> GetOrders(int page, int pageSize, string? search, DateTime? dateFrom, DateTime? dateTo)
     {
         var query = _context.Orders
             .Include(o => o.User)
-            .Include(o => o.OrderItems);
-            
-
+            .Include(o => o.OrderItems)
+            .AsQueryable();
 
         if (!string.IsNullOrWhiteSpace(search))
         {
@@ -33,28 +33,23 @@ public class UsersProvider : IUsersProvider
         }
 
         if (dateFrom.HasValue)
-        {
             query = query.Where(o => o.CreatedAt >= dateFrom.Value);
-        }
 
         if (dateTo.HasValue)
-        {
             query = query.Where(o => o.CreatedAt <= dateTo.Value);
-        }
 
-        var orders = await query
+        return await query
             .OrderByDescending(o => o.CreatedAt)
             .Skip((page - 1) * pageSize)
             .Take(pageSize)
             .ToListAsync();
-
-        return orders;
     }
 
     public async Task<int> GetOrdersCount(string? search, DateTime? dateFrom, DateTime? dateTo)
     {
         var query = _context.Orders
-            .Include(o => o.User);
+            .Include(o => o.User)
+            .AsQueryable();
 
         if (!string.IsNullOrWhiteSpace(search))
         {
@@ -63,16 +58,11 @@ public class UsersProvider : IUsersProvider
         }
 
         if (dateFrom.HasValue)
-        {
             query = query.Where(o => o.CreatedAt >= dateFrom.Value);
-        }
 
         if (dateTo.HasValue)
-        {
             query = query.Where(o => o.CreatedAt <= dateTo.Value);
-        }
 
-        var orders =  await query.CountAsync();
-        return orders;
+        return await query.CountAsync();
     }
 }

@@ -1,3 +1,4 @@
+using DigiVaultAPI.Features.Admin.Messages.DTOs;
 using DigiVaultAPI.Features.Orders.Messages.DTOs;
 using DigiVaultAPI.Features.Courses.Messages.DTOs;
 using MediatR;
@@ -11,6 +12,4 @@ public class GetOrdersQuery : IRequest<PagedResult<AdminOrdersDto>>
     public string? Search { get; set; }
     public DateTime? DateFrom { get; set; }
     public DateTime? DateTo { get; set; }
-
-    
 }

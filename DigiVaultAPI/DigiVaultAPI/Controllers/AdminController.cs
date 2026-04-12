@@ -31,6 +31,11 @@ public class AdminController(IMediator mediator) : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<IActionResult> GetCourses([FromQuery] GetCoursesQuery query)
     => Ok(await mediator.Send(query));    
+
+    [HttpGet("orders")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task<IActionResult> GetOrders([FromQuery] GetOrdersQuery query)
+    => Ok(await mediator.Send(query));
 }
 
 

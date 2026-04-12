@@ -8,9 +8,9 @@ namespace DigiVaultAPI.Features.Admin.Handlers.Queries;
 
 public class GetUsersHandler : IRequestHandler<GetUsersQuery, IEnumerable<AdminUserDto>>
 {
-    private readonly IUsersProvider _provider;
+    private readonly IAdminProvider _provider;
 
-    public GetUsersHandler(IUsersProvider provider)
+    public GetUsersHandler(IAdminProvider provider)
     {
         _provider = provider;
     }

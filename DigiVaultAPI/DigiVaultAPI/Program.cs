@@ -126,7 +126,7 @@ builder.Services.AddScoped<INotificationProvider, NotificationProvider>();
 builder.Services.AddScoped<INotificationService, NotificationService>();
 
 //Admin
-builder.Services.AddScoped<IUsersProvider, UsersProvider>();
+builder.Services.AddScoped<IAdminProvider, AdminProvider>();
 builder.Services.AddScoped<IAdminService, AdminService>();
 
 // JWT
