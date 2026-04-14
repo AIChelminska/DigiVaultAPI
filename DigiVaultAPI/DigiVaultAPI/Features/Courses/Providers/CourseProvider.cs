@@ -171,16 +171,4 @@ public class CourseProvider : ICourseProvider
 
         return count;
     }
-
-    public async Task<int> CreateCourse(Course course)
-    {
-        await _context.Courses.AddAsync(course);
-        await _context.SaveChangesAsync();
-        return course.IdCourse;
-    }
-
-    public async Task SaveChanges()
-    {
-        await _context.SaveChangesAsync();
-    }
 }

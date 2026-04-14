@@ -1,5 +1,5 @@
 using DigiVaultAPI.Features.Courses.Messages.Commands;
-using DigiVaultAPI.Features.Courses.Providers;
+using DigiVaultAPI.Features.Courses.Services;
 using DigiVaultAPI.Models;
 using MediatR;
 
@@ -7,11 +7,11 @@ namespace DigiVaultAPI.Features.Courses.Handlers.Commands;
 
 public class CreateCourseHandler : IRequestHandler<CreateCourseCommand, int>
 {
-    private readonly ICourseProvider _provider;
+    private readonly ICourseService _service;
 
-    public CreateCourseHandler(ICourseProvider provider)
+    public CreateCourseHandler(ICourseService service)
     {
-        _provider = provider;
+        _service = service;
     }
 
     public async Task<int> Handle(CreateCourseCommand command, CancellationToken cancellationToken)
@@ -31,7 +31,7 @@ public class CreateCourseHandler : IRequestHandler<CreateCourseCommand, int>
         };
 
         // 2. Zapisz i zwróć IdCourse (Controller zwróci 201 Created)
-        var idCourse = await _provider.CreateCourse(course);
+        var idCourse = await _service.CreateCourse(course);
         return idCourse;
     }
 }

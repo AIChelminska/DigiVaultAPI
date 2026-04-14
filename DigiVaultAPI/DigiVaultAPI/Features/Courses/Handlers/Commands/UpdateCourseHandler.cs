@@ -33,6 +33,6 @@ public class UpdateCourseHandler : IRequestHandler<UpdateCourseCommand>
         course.IdCategory   = command.IdCategory;
 
         // 3. EF śledzi zmiany — SaveChanges wysyła UPDATE
-        await _provider.SaveChanges();
+        await _service.SaveChanges();
     }
 }

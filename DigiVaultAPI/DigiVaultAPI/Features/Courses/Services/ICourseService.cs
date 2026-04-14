@@ -8,4 +8,6 @@ public interface ICourseService
     void EnsureCourseIsActive(Course course);
     void EnsureCourseIsVisible(Course course);
     void EnsureIsAuthor(int courseOwnerId, int requestingUserId);
+    Task<int> CreateCourse(Course course);
+    Task SaveChanges();
 }

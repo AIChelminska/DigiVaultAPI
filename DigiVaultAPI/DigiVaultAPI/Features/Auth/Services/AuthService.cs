@@ -1,6 +1,7 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using DigiVaultAPI.Data;
 using DigiVaultAPI.Models;
 using Microsoft.IdentityModel.Tokens;
 
@@ -9,23 +10,19 @@ namespace DigiVaultAPI.Features.Auth.Services;
 public class AuthService : IAuthService
 {
     private readonly IConfiguration _configuration;
+    private readonly DigiVaultDbContext _context;
 
-    public AuthService(IConfiguration configuration)
+    public AuthService(IConfiguration configuration, DigiVaultDbContext context)
     {
         _configuration = configuration;
+        _context = context;
     }
 
     public string HashPassword(string password)
-    {
-        var hash = BCrypt.Net.BCrypt.HashPassword(password);
-        return hash;
-    }
+        => BCrypt.Net.BCrypt.HashPassword(password);
 
     public bool VerifyPassword(string password, string hash)
-    {
-        var isValid = BCrypt.Net.BCrypt.Verify(password, hash);
-        return isValid;
-    }
+        => BCrypt.Net.BCrypt.Verify(password, hash);
 
     public string GenerateToken(User user)
     {
@@ -54,7 +51,12 @@ public class AuthService : IAuthService
             signingCredentials: credentials
         );
 
-        var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
-        return tokenString;
+        return new JwtSecurityTokenHandler().WriteToken(token);
+    }
+
+    public async Task CreateUser(User user)
+    {
+        await _context.Users.AddAsync(user);
+        await _context.SaveChangesAsync();
     }
 }

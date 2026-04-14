@@ -4,7 +4,6 @@ namespace DigiVaultAPI.Features.Courses.Providers;
 
 public interface ICourseProvider
 {
-    // Queries
     Task<List<Course>> GetCourses(string? search, int? idCategory, decimal? minPrice, decimal? maxPrice, string? sortBy, int page, int pageSize, bool includeHidden = false);
     Task<int> GetCoursesCount(string? search, int? idCategory, decimal? minPrice, decimal? maxPrice, bool includeHidden = false);
     Task<Course?> GetCourseById(int idCourse);
@@ -15,8 +14,4 @@ public interface ICourseProvider
     Task<List<Course>> GetSellerCourses(int idUser, int page, int pageSize);
     Task<int> GetSellerCoursesCount(int idUser);
     Task<List<Course>> GetUserCourses(int idUser);
-
-    // Commands
-    Task<int> CreateCourse(Course course);
-    Task SaveChanges();
 }

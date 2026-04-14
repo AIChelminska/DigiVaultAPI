@@ -28,10 +28,4 @@ public class AuthProvider : IAuthProvider
 
         return user;
     }
-
-    public async Task CreateUser(User user)
-    {
-        await _context.Users.AddAsync(user);
-        await _context.SaveChangesAsync();
-    }
 }

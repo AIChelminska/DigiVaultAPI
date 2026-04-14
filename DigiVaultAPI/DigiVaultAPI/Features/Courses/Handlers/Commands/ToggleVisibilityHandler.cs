@@ -25,6 +25,6 @@ public class ToggleVisibilityHandler : IRequestHandler<ToggleVisibilityCommand>
 
         // Ustaw widoczność — IsActive nie jest dotykane
         course!.IsVisible = command.IsVisible;  // true = pokaż, false = ukryj
-        await _provider.SaveChanges();
+        await _service.SaveChanges();
     }
 }

@@ -14,6 +14,17 @@ public class OrderService : IOrderService
         _context = context;
     }
 
+    public void EnsureOrderExists(Order? order)
+    {
+        if (order == null)
+            throw new NotFoundException("Order not found");
+    }
+    public void EnsureOrderBelongsToUser(Order order, int idUser)
+    {
+        if (order.IdUser != idUser)
+            throw new ForbiddenException("You are not allowed to access this order");
+    }
+
     public async Task<int> CreateOrder(int idUser)
     {
     await using var transaction = await _context.Database.BeginTransactionAsync();

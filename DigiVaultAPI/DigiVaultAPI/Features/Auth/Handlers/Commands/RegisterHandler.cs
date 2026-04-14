@@ -31,7 +31,7 @@ public class RegisterHandler : IRequestHandler<RegisterCommand>
         // 3. Zahashuj hasło przez Service
         var hash = _authService.HashPassword(command.Password);
 
-        // 4. Stwórz usera i zapisz przez Provider
+        // 4. Stwórz usera i zapisz przez Service
         var user = new User
         {
             Login = command.Login,
@@ -44,6 +44,6 @@ public class RegisterHandler : IRequestHandler<RegisterCommand>
             Balance = 0
         };
 
-        await _authProvider.CreateUser(user);
+        await _authService.CreateUser(user);
     }
 }
