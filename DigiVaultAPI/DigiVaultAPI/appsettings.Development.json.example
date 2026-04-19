@@ -1,0 +1,11 @@
+{
+  "Jwt": {
+    "Key": "YOUR_JWT_SECRET_KEY_MIN_32_CHARS",
+    "Issuer": "DigiVaultAPI",
+    "Audience": "DigiVaultMobile",
+    "ExpiryMinutes": 60
+  },
+  "ConnectionStrings": {
+    "DefaultConnection": "Host=localhost;Port=5433;Database=DigiVaultDb;Username=postgres;Password=YOUR_PASSWORD"
+  }
+}
