@@ -33,7 +33,7 @@ Built with **ASP.NET Core 9**, following a vertical-slice architecture using the
 - Course library (purchased courses)
 - Rating and review system tied to course ownership
 - Course reporting and notification system
-- Admin panel — user management (activate/deactivate), course oversight, order reporting
+- Admin panel — user management (activate/deactivate), course oversight, order reporting *(in progress)*
 
 ---
 
