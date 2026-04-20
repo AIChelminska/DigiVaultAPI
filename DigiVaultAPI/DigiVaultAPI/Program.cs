@@ -171,6 +171,7 @@ using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<DigiVaultDbContext>();
     db.Database.Migrate();
+    DigiVaultSeeder.Seed(db);
 }
 
 if (app.Environment.IsDevelopment())
