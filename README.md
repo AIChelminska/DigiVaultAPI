@@ -290,18 +290,24 @@ The API will be available at:
 
 ### Running with Docker
 
-```bash
-# Build the image
-docker build -t digivault-api ./DigiVaultAPI
+The repository ships with a `docker-compose.yml` that starts **both** the API and a PostgreSQL database together.
 
-# Run the container (pass connection string and JWT key as environment variables)
-docker run -p 8080:8080 \
-  -e ConnectionStrings__DefaultConnection="Host=host.docker.internal;Port=5432;Database=DigiVaultDb;Username=postgres;Password=postgres123" \
-  -e Jwt__Key="YOUR_SECRET_KEY_MIN_32_CHARACTERS_LONG" \
-  -e Jwt__Issuer="DigiVaultAPI" \
-  -e Jwt__Audience="DigiVaultMobile" \
-  digivault-api
+```bash
+# 1. Create your local env file from the template
+cp .env.example .env
+# Edit .env — fill in POSTGRES_PASSWORD and JWT_KEY at minimum
+
+# 2. Start both services (API + PostgreSQL)
+docker compose up --build
+
+# 3. Stop and remove containers
+docker compose down
 ```
+
+The API will be available at `http://localhost:8080` (configurable via `API_HOST_PORT` in `.env`).  
+The database is exposed on `localhost:5433` by default (configurable via `POSTGRES_HOST_PORT`).
+
+> Migrations and seeding run automatically on API startup — no extra steps needed.
 
 ---
 
