@@ -9,7 +9,7 @@ services:
     ports:
       - "${POSTGRES_HOST_PORT}:5432"
     volumes:
-      - digivault-postgres-data:
+      - digivault-postgres-data:/var/lib/postgresql/data
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
       interval: 5s
@@ -35,5 +35,5 @@ services:
         condition: service_healthy
 
 volumes:
-  2daeb781040b489362b2c29bcf51d30097835a6572901adb96eaf9ba31dea519:
+  digivault-postgres-data:
     external: true
