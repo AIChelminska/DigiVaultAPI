@@ -374,14 +374,25 @@ Swagger UI in Development includes a **Authorize** button for pasting a Bearer t
 
 ## Seeded Data
 
-On startup the `DigiVaultSeeder` populates an empty database with:
+On startup the `DigiVaultSeeder` populates an empty database with sample data so the API is fully explorable via Swagger or any HTTP client without any manual setup.
+
+### Test accounts
+
+| Login | Password | Role | Notes |
+|-------|----------|------|-------|
+| `test` | `test` | User | Has balance, orders, and purchased courses |
+| `test2` | `test` | User | |
+| `test3` | `test` | User | |
+| `test4` | `test` | User | |
+| `test5` | `test` | User | |
+| `admin` | `admin` | Worker (Admin) | Full access to `/api/admin/*` endpoints |
+
+### Other seeded content
 
 - Platform settings (commission rate)
-- Sample users (including an admin account with role `Worker`)
 - Categories and a rich set of courses
-- Cart items, wishlist items, orders, reviews, notifications, and course reports
-
-This makes the API fully explorable via Swagger or any HTTP client without manual setup.
+- Cart items, wishlist items, orders, order items
+- Reviews, notifications, and course reports
 
 ---
 
