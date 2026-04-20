@@ -11,6 +11,9 @@
 *.sln.docstates
 *.env
 
+# Docker secrets — never commit the real env file
+.env
+
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
