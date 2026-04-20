@@ -269,7 +269,7 @@ cp DigiVaultAPI/appsettings.Development.json.example DigiVaultAPI/appsettings.De
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/your-username/DigiVaultAPI.git
+git clone https://github.com/AIChelminska/DigiVaultAPI.git
 cd DigiVaultAPI
 
 # 2. Configure environment (see above)
