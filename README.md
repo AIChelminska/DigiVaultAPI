@@ -1,5 +1,12 @@
 # DigiVault API
 
+![ASP.NET Core](https://img.shields.io/badge/ASP.NET_Core-9.0-512BD4?logo=dotnet&logoColor=white)
+![EF Core](https://img.shields.io/badge/EF_Core-9.0.1-512BD4?logo=dotnet&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15+-4169E1?logo=postgresql&logoColor=white)
+![MediatR](https://img.shields.io/badge/MediatR-12.4.1-512BD4)
+![Swagger](https://img.shields.io/badge/Swagger-7.2.0-85EA2D?logo=swagger&logoColor=black)
+![License](https://img.shields.io/badge/license-MIT-green)
+
 A RESTful back-end for **DigiVault** — a digital course marketplace where users can browse, purchase, and review courses, sellers can manage their own catalogue, and administrators can oversee users, orders, and platform operations.
 
 Built with **ASP.NET Core 9**, following a vertical-slice architecture using the CQRS pattern (MediatR).
