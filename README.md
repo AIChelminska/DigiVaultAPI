@@ -6,6 +6,7 @@
 ![MediatR](https://img.shields.io/badge/MediatR-12.4.1-512BD4)
 ![Swagger](https://img.shields.io/badge/Swagger-7.2.0-85EA2D?logo=swagger&logoColor=black)
 ![License](https://img.shields.io/badge/license-MIT-green)
+![Status](https://img.shields.io/badge/status-🚧_work_in_progress-yellow)
 
 A RESTful back-end for **DigiVault** — a digital course marketplace where users can browse, purchase, and review courses, sellers can manage their own catalogue, and administrators can oversee users, orders, and platform operations.
 
