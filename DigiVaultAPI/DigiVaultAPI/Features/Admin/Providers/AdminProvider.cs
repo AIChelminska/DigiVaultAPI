@@ -65,4 +65,38 @@ public class AdminProvider : IAdminProvider
 
         return await query.CountAsync();
     }
+
+    public async Task<IEnumerable<Category>> GetCategories(int page, int pageSize, string? search)
+    {
+        var query = _context.Categories.AsQueryable();
+
+        if (!string.IsNullOrWhiteSpace(search))
+        {
+            var lower = search.ToLower();
+            query = query.Where(c => c.Name.ToLower().Contains(lower));
+        }
+
+        return await query
+            .OrderByDescending(c => c.Name)
+            .Skip((page - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync();   
+        
+    }
+
+    public async Task<int> GetCategoriesCount(string? search)
+    {
+        var query = _context.Categories.AsQueryable();
+
+        if (!string.IsNullOrWhiteSpace(search))
+        {
+            var lower = search.ToLower();
+            query = query.Where(c => c.Name.ToLower().Contains(lower));
+        }
+
+        return await query.CountAsync();
+    }
+
+
 }
+

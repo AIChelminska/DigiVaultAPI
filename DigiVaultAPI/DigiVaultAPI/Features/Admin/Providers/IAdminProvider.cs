@@ -9,4 +9,6 @@ public interface IAdminProvider
     Task<IEnumerable<User>> GetUsers();
     Task<IEnumerable<Order>> GetOrders(int page, int pageSize, string? search, DateTime? dateFrom, DateTime? dateTo);
     Task<int> GetOrdersCount(string? search, DateTime? dateFrom, DateTime? dateTo);
+    Task<IEnumerable<Category>> GetCategories(int page, int pageSize, string? search);
+    Task<int> GetCategoriesCount(string? search);
 }
