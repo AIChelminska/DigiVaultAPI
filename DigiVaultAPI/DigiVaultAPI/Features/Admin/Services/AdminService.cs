@@ -45,4 +45,14 @@ public class AdminService : IAdminService
         _context.Categories.Add(category);
         await _context.SaveChangesAsync();
     }
+
+    public async Task UpdateCategory(int idCategory, string name)
+    {
+        var category = await _context.Categories.FirstOrDefaultAsync(c => c.IdCategory == idCategory);
+        if (category == null) throw new NotFoundException("Category not found");
+        var exists = await _context.Categories.AnyAsync(c => c.Name == name && c.IdCategory != idCategory);
+        if (exists) throw new ConflictException("Category with this name already exists");
+        category.Name = name;
+        await _context.SaveChangesAsync();
+    }
 }

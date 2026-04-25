@@ -46,6 +46,11 @@ public class AdminController(IMediator mediator) : ControllerBase
     [ProducesResponseType(StatusCodes.Status201Created)]
     public async Task<IActionResult> CreateCategory([FromBody] CreateCategoryCommand command)
     { await mediator.Send(command); return StatusCode(201); }
+
+    [HttpPut("categories/{idCategory}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    public async Task<IActionResult> UpdateCategory([FromRoute] int idCategory, [FromBody] UpdateCategoryCommand command)
+    { command.IdCategory = idCategory; await mediator.Send(command); return NoContent(); }
 }
 
 
