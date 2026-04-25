@@ -22,6 +22,24 @@ public static class DigiVaultSeeder
         SeedReviews(db);
         SeedUserCourses(db);
         SeedWishlistItems(db);
+        ResetSequences(db);
+    }
+
+    private static void ResetSequences(DigiVaultDbContext db)
+    {
+        db.Database.ExecuteSqlRaw(@"
+            SELECT setval(pg_get_serial_sequence('""Categories""',    'IdCategory'),    COALESCE(MAX(""IdCategory""),    1)) FROM ""Categories"";
+            SELECT setval(pg_get_serial_sequence('""Users""',         'IdUser'),         COALESCE(MAX(""IdUser""),         1)) FROM ""Users"";
+            SELECT setval(pg_get_serial_sequence('""Courses""',       'IdCourse'),       COALESCE(MAX(""IdCourse""),       1)) FROM ""Courses"";
+            SELECT setval(pg_get_serial_sequence('""Orders""',        'IdOrder'),        COALESCE(MAX(""IdOrder""),        1)) FROM ""Orders"";
+            SELECT setval(pg_get_serial_sequence('""OrderItems""',    'IdOrderItem'),    COALESCE(MAX(""IdOrderItem""),    1)) FROM ""OrderItems"";
+            SELECT setval(pg_get_serial_sequence('""Reviews""',       'IdReview'),       COALESCE(MAX(""IdReview""),       1)) FROM ""Reviews"";
+            SELECT setval(pg_get_serial_sequence('""Notifications""', 'IdNotification'), COALESCE(MAX(""IdNotification""), 1)) FROM ""Notifications"";
+            SELECT setval(pg_get_serial_sequence('""CourseReports""', 'IdCourseReport'), COALESCE(MAX(""IdCourseReport""), 1)) FROM ""CourseReports"";
+            SELECT setval(pg_get_serial_sequence('""CartItems""',     'IdCartItem'),     COALESCE(MAX(""IdCartItem""),     1)) FROM ""CartItems"";
+            SELECT setval(pg_get_serial_sequence('""UserCourses""',   'IdUserCourse'),   COALESCE(MAX(""IdUserCourse""),   1)) FROM ""UserCourses"";
+            SELECT setval(pg_get_serial_sequence('""WishlistItems""', 'IdWishlistItem'), COALESCE(MAX(""IdWishlistItem""), 1)) FROM ""WishlistItems"";
+        ");
     }
 
     private static void SeedPlatformSettings(DigiVaultDbContext db)

@@ -42,7 +42,10 @@ public class AdminController(IMediator mediator) : ControllerBase
     public async Task<IActionResult> GetCategories([FromQuery] GetCategoriesQuery query)
     => Ok(await mediator.Send(query));
 
-
+    [HttpPost("categories")]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    public async Task<IActionResult> CreateCategory([FromBody] CreateCategoryCommand command)
+    { await mediator.Send(command); return StatusCode(201); }
 }
 
 
