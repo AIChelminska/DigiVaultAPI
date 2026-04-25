@@ -55,4 +55,14 @@ public class AdminService : IAdminService
         category.Name = name;
         await _context.SaveChangesAsync();
     }
+
+    public async Task DeleteCategory(int idCategory)
+    {
+        var category = await _context.Categories.FirstOrDefaultAsync(c => c.IdCategory == idCategory);
+        if (category == null) throw new NotFoundException("Category not found");
+        var hasCourses = await _context.Courses.AnyAsync(c => c.IdCategory == idCategory);
+        if (hasCourses) throw new ConflictException("Cannot delete category with existing courses");
+        _context.Categories.Remove(category);
+        await _context.SaveChangesAsync();
+    }
 }

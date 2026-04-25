@@ -51,6 +51,11 @@ public class AdminController(IMediator mediator) : ControllerBase
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<IActionResult> UpdateCategory([FromRoute] int idCategory, [FromBody] UpdateCategoryCommand command)
     { command.IdCategory = idCategory; await mediator.Send(command); return NoContent(); }
+
+    [HttpDelete("categories/{idCategory}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    public async Task<IActionResult> DeleteCategory([FromRoute] int idCategory)
+    { await mediator.Send(new DeleteCategoryCommand { IdCategory = idCategory }); return NoContent(); }
 }
 
 

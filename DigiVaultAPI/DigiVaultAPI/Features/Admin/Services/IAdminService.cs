@@ -6,4 +6,5 @@ public interface IAdminService
     Task SetAsNotActiveUser(int idUser);
     Task CreateCategory(string name);
     Task UpdateCategory(int idCategory, string name);
+    Task DeleteCategory(int idCategory);
 }
