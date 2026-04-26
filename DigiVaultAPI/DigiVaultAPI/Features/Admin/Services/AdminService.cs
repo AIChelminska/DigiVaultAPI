@@ -2,6 +2,7 @@ using DigiVaultAPI.Data;
 using DigiVaultAPI.Exceptions;
 using Microsoft.EntityFrameworkCore;
 using DigiVaultAPI.Models;
+using BCrypt.Net;
 
 namespace DigiVaultAPI.Features.Admin.Services;
 
@@ -63,6 +64,25 @@ public class AdminService : IAdminService
         var hasCourses = await _context.Courses.AnyAsync(c => c.IdCategory == idCategory);
         if (hasCourses) throw new ConflictException("Cannot delete category with existing courses");
         _context.Categories.Remove(category);
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task CreateUser(string login, string email, string password, string firstName, string lastName, UserRole role)
+    {
+        var existingUser = await _context.Users.FirstOrDefaultAsync(u => u.Login == login || u.Email == email);
+        if (existingUser != null) throw new ConflictException("User with this login or email already exists");
+        var hash = BCrypt.Net.BCrypt.HashPassword(password);
+        var user = new User
+        {
+            Login = login,
+            Email = email,
+            PasswordHash = hash,
+            FirstName = firstName,
+            LastName = lastName,
+            Role = role
+        };
+
+        _context.Users.Add(user);
         await _context.SaveChangesAsync();
     }
 }
