@@ -2,6 +2,7 @@ using DigiVaultAPI.Data;
 using DigiVaultAPI.Models;
 using Microsoft.EntityFrameworkCore;
 using DigiVaultAPI.Features.Admin.Messages.DTOs;
+using DigiVaultAPI.Exceptions;
 
 namespace DigiVaultAPI.Features.Admin.Providers;
 
@@ -97,6 +98,13 @@ public class AdminProvider : IAdminProvider
         return await query.CountAsync();
     }
 
-
+    public async Task<User> GetUserById(int idUser)
+    {
+        return await _context.Users
+            .Include(u => u.Courses)
+            .Include(u => u.UserCourses)
+                .ThenInclude(uc => uc.Course)
+            .FirstOrDefaultAsync(u => u.IdUser == idUser) ?? throw new NotFoundException("User not found");
+    }
 }
 

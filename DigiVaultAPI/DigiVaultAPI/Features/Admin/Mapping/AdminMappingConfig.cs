@@ -12,5 +12,9 @@ public class AdminMappingConfig : IRegister
             .Map(dest => dest.FullName, src => src.User.FirstName + " " + src.User.LastName)
             .Map(dest => dest.Email, src => src.User.Email)
             .Map(dest => dest.ItemsCount, src => src.OrderItems.Count);
+
+        config.NewConfig<User, AdminUserDetailDto>()
+            .Map(dest => dest.CreatedCourses, src => src.Courses)
+            .Map(dest => dest.PurchasedCourses, src => src.UserCourses.Select(uc => uc.Course));
     }
 }
