@@ -85,4 +85,14 @@ public class AdminService : IAdminService
         _context.Users.Add(user);
         await _context.SaveChangesAsync();
     }
+
+    public async Task UpdateUser(int idUser, UserRole role, int warningsCount, bool isActive)
+    {
+        var user = await _context.Users.FirstOrDefaultAsync(u => u.IdUser == idUser);
+        if (user == null) throw new NotFoundException("User not found");
+        user.Role = role;
+        user.WarningsCount = warningsCount;
+        user.IsActive = isActive;
+        await _context.SaveChangesAsync();
+    }
 }

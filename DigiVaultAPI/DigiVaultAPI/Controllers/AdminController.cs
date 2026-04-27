@@ -67,6 +67,11 @@ public class AdminController(IMediator mediator) : ControllerBase
     [ProducesResponseType(StatusCodes.Status201Created)]
     public async Task<IActionResult> CreateUser([FromBody] CreateUserCommand command)
     { await mediator.Send(command); return StatusCode(201); }
+
+    [HttpPut("user/{idUser}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    public async Task<IActionResult> UpdateUser([FromRoute] int idUser, [FromBody] UpdateUserCommand command)
+    { command.IdUser = idUser; await mediator.Send(command); return NoContent(); }
 }
 
 
