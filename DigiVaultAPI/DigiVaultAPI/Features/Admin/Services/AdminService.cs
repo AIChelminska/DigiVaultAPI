@@ -95,4 +95,25 @@ public class AdminService : IAdminService
         user.IsActive = isActive;
         await _context.SaveChangesAsync();
     }
+
+    public async Task DeleteReview(int idReview)
+    {
+        var review = await _context.Reviews.FirstOrDefaultAsync(r => r.IdReview == idReview);
+        if (review == null) throw new NotFoundException("Review not found");
+        _context.Reviews.Remove(review);
+        var course = await _context.Courses.FirstOrDefaultAsync(c => c.IdCourse == review.IdCourse);
+        if (course != null)
+        {
+            if (course.RatingsCount > 1)
+            {
+                course.AverageRating = (course.AverageRating * course.RatingsCount - review.Rating) / (course.RatingsCount - 1);
+            }
+            else
+            {
+                course.AverageRating = 0;
+            }
+            course.RatingsCount--;
+        }
+        await _context.SaveChangesAsync();
+    }
 }
