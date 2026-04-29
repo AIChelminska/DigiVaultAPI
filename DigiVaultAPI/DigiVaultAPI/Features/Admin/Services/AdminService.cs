@@ -116,4 +116,12 @@ public class AdminService : IAdminService
         }
         await _context.SaveChangesAsync();
     }
+
+    public async Task DeleteCourse(int idCourse)
+    {
+        var course = await _context.Courses.FirstOrDefaultAsync(c => c.IdCourse == idCourse);
+        if (course == null) throw new NotFoundException("Course not found");
+        course.IsActive = false;
+        await _context.SaveChangesAsync();
+    }
 }

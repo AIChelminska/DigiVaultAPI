@@ -12,4 +12,5 @@ public interface IAdminService
     Task CreateUser(string login, string email, string password, string firstName, string lastName, UserRole role);
     Task UpdateUser(int idUser, UserRole role, int warningsCount, bool isActive);
     Task DeleteReview(int idReview);
+    Task DeleteCourse(int idCourse);
 }
