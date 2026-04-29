@@ -77,6 +77,11 @@ public class AdminController(IMediator mediator) : ControllerBase
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<IActionResult> DeleteReview([FromRoute] int idReview)
     { await mediator.Send(new DeleteReviewCommand { IdReview = idReview }); return NoContent(); }
+
+    [HttpGet("courses/{idCourse}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task<IActionResult> GetCourseById([FromRoute] int idCourse)
+    => Ok(await mediator.Send(new GetCourseByIdAdminQuery { IdCourse = idCourse }));
 }
 
 

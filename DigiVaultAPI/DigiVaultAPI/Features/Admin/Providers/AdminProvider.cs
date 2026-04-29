@@ -106,5 +106,16 @@ public class AdminProvider : IAdminProvider
                 .ThenInclude(uc => uc.Course)
             .FirstOrDefaultAsync(u => u.IdUser == idUser) ?? throw new NotFoundException("User not found");
     }
+
+    public async Task<Course> GetCourseById(int idCourse)
+    {
+        var course = await _context.Courses
+            .Include(c => c.User)
+            .Include(c => c.Category)
+            .Include(c => c.CourseReports)
+            .FirstOrDefaultAsync(c => c.IdCourse == idCourse);
+
+        return course ?? throw new NotFoundException("Course not found");
+    }
 }
 

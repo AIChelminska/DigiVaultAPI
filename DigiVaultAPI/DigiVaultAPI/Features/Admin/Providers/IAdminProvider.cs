@@ -12,4 +12,5 @@ public interface IAdminProvider
     Task<IEnumerable<Category>> GetCategories(int page, int pageSize, string? search);
     Task<int> GetCategoriesCount(string? search);
     Task<User> GetUserById(int idUser);
+    Task<Course> GetCourseById(int idCourse);
 }
