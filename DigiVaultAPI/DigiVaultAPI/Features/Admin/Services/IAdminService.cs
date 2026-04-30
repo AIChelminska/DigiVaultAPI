@@ -13,4 +13,5 @@ public interface IAdminService
     Task UpdateUser(int idUser, UserRole role, int warningsCount, bool isActive);
     Task DeleteReview(int idReview);
     Task DeleteCourse(int idCourse);
+    Task DeleteOrder(int idOrder);
 }

@@ -92,6 +92,11 @@ public class AdminController(IMediator mediator) : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<IActionResult> GetOrderById([FromRoute] int idOrder)
     => Ok(await mediator.Send(new GetOrderByIdAdminQuery { IdOrder = idOrder }));
+
+    [HttpDelete("orders/{idOrder}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    public async Task<IActionResult> DeleteOrder([FromRoute] int idOrder)
+    { await mediator.Send(new DeleteOrderCommand { IdOrder = idOrder }); return NoContent(); }
 }
 
 

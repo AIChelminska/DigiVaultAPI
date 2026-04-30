@@ -124,4 +124,35 @@ public class AdminService : IAdminService
         course.IsActive = false;
         await _context.SaveChangesAsync();
     }
+
+    public async Task DeleteOrder(int idOrder)
+    {
+        await using var transaction = await _context.Database.BeginTransactionAsync();
+        try
+        {
+        var order = await _context.Orders
+            .Include(o => o.User)
+            .Include(o => o.OrderItems)
+            .FirstOrDefaultAsync(o => o.IdOrder == idOrder);
+        if (order == null) throw new NotFoundException("Order not found");
+
+        order.User.Balance += order.TotalPrice;
+
+        var courseIds = order.OrderItems.Select(oi => oi.IdCourse).ToList();
+        var userCourses = await _context.UserCourses
+            .Where(uc => uc.IdUser == order.IdUser && courseIds.Contains(uc.IdCourse))
+            .ToListAsync();
+        _context.UserCourses.RemoveRange(userCourses);
+        
+        _context.Orders.Remove(order);
+        await _context.SaveChangesAsync();
+        await transaction.CommitAsync();
+    }
+    catch
+    {
+        await transaction.RollbackAsync();
+        throw;
+    }
+}
+
 }
