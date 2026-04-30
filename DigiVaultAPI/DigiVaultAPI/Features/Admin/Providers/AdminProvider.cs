@@ -117,5 +117,16 @@ public class AdminProvider : IAdminProvider
 
         return course ?? throw new NotFoundException("Course not found");
     }
+
+    public async Task<Order> GetOrderByIdAdmin(int idOrder)
+    {
+        var order = await _context.Orders
+            .Include(o => o.User)
+            .Include(o => o.OrderItems)
+                .ThenInclude(oi => oi.Course)
+            .FirstOrDefaultAsync(o => o.IdOrder == idOrder);
+
+        return order ?? throw new NotFoundException("Order not found");
+    }
 }
 

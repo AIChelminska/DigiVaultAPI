@@ -1,4 +1,5 @@
 using DigiVaultAPI.Features.Admin.Messages.DTOs;
+using DigiVaultAPI.Features.Orders.Messages.DTOs;
 using DigiVaultAPI.Models;
 using Mapster;
 
@@ -21,7 +22,13 @@ public class AdminMappingConfig : IRegister
             .Map(dest => dest.AuthorName, src => src.User.FirstName + " " + src.User.LastName)
             .Map(dest => dest.CategoryName, src => src.Category.Name)
             .Map(dest => dest.ReportsCount, src => src.CourseReports.Count);
+
+        config.NewConfig<Order, AdminOrderDetailsDto>()
+            .Map(dest => dest.UserName, src => src.User.FirstName + " " + src.User.LastName)
+            .Map(dest => dest.Email, src => src.User.Email)
+            .Map(dest => dest.ItemsCount, src => src.OrderItems.Count);
+
+        config.NewConfig<OrderItem, OrderItemDto>()
+            .Map(dest => dest.Title, src => src.Course != null ? src.Course.Title : string.Empty);
     }
-
-
 }

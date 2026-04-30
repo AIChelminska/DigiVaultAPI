@@ -13,4 +13,5 @@ public interface IAdminProvider
     Task<int> GetCategoriesCount(string? search);
     Task<User> GetUserById(int idUser);
     Task<Course> GetCourseById(int idCourse);
+    Task<Order> GetOrderByIdAdmin(int idOrder);
 }
