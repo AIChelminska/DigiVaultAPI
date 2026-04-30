@@ -14,4 +14,5 @@ public interface IAdminService
     Task DeleteReview(int idReview);
     Task DeleteCourse(int idCourse);
     Task DeleteOrder(int idOrder);
+    Task RemoveCourseFromOrder(int idOrder, int idCourse);
 }

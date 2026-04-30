@@ -147,12 +147,43 @@ public class AdminService : IAdminService
         _context.Orders.Remove(order);
         await _context.SaveChangesAsync();
         await transaction.CommitAsync();
+        }
+        catch
+        {
+            await transaction.RollbackAsync();
+            throw;
+        }
     }
-    catch
+
+    public async Task RemoveCourseFromOrder(int idOrder, int idCourse)
     {
-        await transaction.RollbackAsync();
-        throw;
+        await using var transaction = await _context.Database.BeginTransactionAsync();
+        try
+        {
+            var orderItem = await _context.OrderItems
+                .Include(oi => oi.Order)
+                    .ThenInclude(o => o.User)
+                .FirstOrDefaultAsync(oi => oi.IdOrder == idOrder && oi.IdCourse == idCourse);
+            if (orderItem == null) throw new NotFoundException("Course not found in this order");
+
+            orderItem.Order.User.Balance += orderItem.Price;
+
+            var userCourse = await _context.UserCourses
+                .FirstOrDefaultAsync(uc => uc.IdUser == orderItem.Order.IdUser && uc.IdCourse == idCourse);
+            if (userCourse != null)
+                _context.UserCourses.Remove(userCourse);
+
+            orderItem.Order.TotalPrice -= orderItem.Price;
+            _context.OrderItems.Remove(orderItem);
+
+            await _context.SaveChangesAsync();
+            await transaction.CommitAsync();
+        }
+        catch
+        {
+            await transaction.RollbackAsync();
+            throw;
+        }
     }
-}
 
 }
