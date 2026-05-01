@@ -14,4 +14,7 @@ public interface IAdminProvider
     Task<User> GetUserById(int idUser);
     Task<Course> GetCourseById(int idCourse);
     Task<Order> GetOrderByIdAdmin(int idOrder);
+    Task<IEnumerable<Notification>> GetNotificationsAdmin(int page, int pageSize, string? search, bool isRead);
+    Task<int> GetNotificationsAdminCount(string? search, bool isRead);
+    Task<AdminSettingsDto> GetSettings();
 }

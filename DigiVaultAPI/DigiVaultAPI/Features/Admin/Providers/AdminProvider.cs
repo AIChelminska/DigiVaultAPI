@@ -3,6 +3,7 @@ using DigiVaultAPI.Models;
 using Microsoft.EntityFrameworkCore;
 using DigiVaultAPI.Features.Admin.Messages.DTOs;
 using DigiVaultAPI.Exceptions;
+using Mapster;
 
 namespace DigiVaultAPI.Features.Admin.Providers;
 
@@ -127,6 +128,50 @@ public class AdminProvider : IAdminProvider
             .FirstOrDefaultAsync(o => o.IdOrder == idOrder);
 
         return order ?? throw new NotFoundException("Order not found");
+    }
+
+    public async Task<IEnumerable<Notification>> GetNotificationsAdmin(int page, int pageSize, string? search, bool isRead)
+    {
+        var query = _context.Notifications
+            .Include(n => n.User)
+            .AsQueryable();
+
+        if (!string.IsNullOrWhiteSpace(search))
+        {
+            var lower = search.ToLower();
+            query = query.Where(n => n.Title.ToLower().Contains(lower) || n.Message.ToLower().Contains(lower));
+        }
+
+        if (isRead)
+            query = query.Where(n => n.IsRead);
+
+        return await query.OrderByDescending(n => n.CreatedAt)
+            .Skip((page - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
+    }
+
+    public async Task<int> GetNotificationsAdminCount(string? search, bool isRead)
+    {
+        var query = _context.Notifications.AsQueryable();
+
+        if (!string.IsNullOrWhiteSpace(search))
+        {
+            var lower = search.ToLower();
+            query = query.Where(n => n.Title.ToLower().Contains(lower) || n.Message.ToLower().Contains(lower));
+        }
+
+        if (isRead)
+            query = query.Where(n => n.IsRead);
+
+        return await query.CountAsync();
+    }
+
+    public async Task<AdminSettingsDto> GetSettings()
+    {
+        var settings = await _context.PlatformSettings.FirstOrDefaultAsync();
+        if (settings == null) throw new NotFoundException("Settings not found");
+        return settings.Adapt<AdminSettingsDto>();
     }
 }
 

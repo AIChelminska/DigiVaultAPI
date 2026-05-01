@@ -102,6 +102,17 @@ public class AdminController(IMediator mediator) : ControllerBase
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<IActionResult> UpdateOrder([FromRoute] int idOrder, [FromRoute] int idCourse)
     { await mediator.Send(new RemoveCourseFromOrder { IdOrder = idOrder, IdCourse = idCourse }); return NoContent(); }
+
+    [HttpGet("notifications")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task<IActionResult> GetNotifications([FromQuery] GetNotificationsAdminQuery query)
+    => Ok(await mediator.Send(query));
+
+    [HttpGet("settings")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task<IActionResult> GetSettings()
+    => Ok(await mediator.Send(new GetSettingsQuery()));
+
 }
 
 

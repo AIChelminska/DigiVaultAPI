@@ -30,5 +30,8 @@ public class AdminMappingConfig : IRegister
 
         config.NewConfig<OrderItem, OrderItemDto>()
             .Map(dest => dest.Title, src => src.Course != null ? src.Course.Title : string.Empty);
+        
+        config.NewConfig<Notification, AdminNotificationDto>()
+            .Map(dest => dest.UserName, src => src.User.FirstName + " " + src.User.LastName);
     }
 }
