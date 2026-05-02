@@ -15,4 +15,5 @@ public interface IAdminService
     Task DeleteCourse(int idCourse);
     Task DeleteOrder(int idOrder);
     Task RemoveCourseFromOrder(int idOrder, int idCourse);
+    Task UpdateSettings(decimal commissionRate);
 }

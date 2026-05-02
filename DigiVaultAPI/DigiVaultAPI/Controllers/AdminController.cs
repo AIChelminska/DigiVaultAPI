@@ -113,6 +113,11 @@ public class AdminController(IMediator mediator) : ControllerBase
     public async Task<IActionResult> GetSettings()
     => Ok(await mediator.Send(new GetSettingsQuery()));
 
+    [HttpPut("settings/commission")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    public async Task<IActionResult> UpdateSettings([FromBody] UpdateSettingsCommand command)
+    { await mediator.Send(command); return NoContent(); }
+
 }
 
 

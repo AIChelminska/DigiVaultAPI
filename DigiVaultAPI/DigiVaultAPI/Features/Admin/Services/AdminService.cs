@@ -186,4 +186,11 @@ public class AdminService : IAdminService
         }
     }
 
+    public async Task UpdateSettings(decimal commissionRate)
+    {
+        var settings = await _context.PlatformSettings.FirstOrDefaultAsync();
+        if (settings == null) throw new NotFoundException("Settings not found");
+        settings.CommissionRate = commissionRate;
+        await _context.SaveChangesAsync();
+    }
 }
