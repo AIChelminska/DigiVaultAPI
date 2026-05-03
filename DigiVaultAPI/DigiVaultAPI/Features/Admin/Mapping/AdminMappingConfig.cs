@@ -33,5 +33,9 @@ public class AdminMappingConfig : IRegister
         
         config.NewConfig<Notification, AdminNotificationDto>()
             .Map(dest => dest.UserName, src => src.User.FirstName + " " + src.User.LastName);
+
+        config.NewConfig<CourseReport, AdminReportDto>()
+            .Map(dest => dest.CourseTitle, src => src.Course.Title)
+            .Map(dest => dest.ReportedBy, src => src.User.FirstName + " " + src.User.LastName);
     }
 }

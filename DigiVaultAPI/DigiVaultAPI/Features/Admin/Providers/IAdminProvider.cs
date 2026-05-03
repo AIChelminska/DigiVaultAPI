@@ -17,4 +17,6 @@ public interface IAdminProvider
     Task<IEnumerable<Notification>> GetNotificationsAdmin(int page, int pageSize, string? search, bool isRead);
     Task<int> GetNotificationsAdminCount(string? search, bool isRead);
     Task<AdminSettingsDto> GetSettings();
+    Task<IEnumerable<CourseReport>> GetReportsAdmin(bool? isResolved, int page, int pageSize);
+    Task<int> GetReportsAdminCount(bool? isResolved);
 }

@@ -123,6 +123,11 @@ public class AdminController(IMediator mediator) : ControllerBase
     public async Task<IActionResult> CreateNotification([FromBody] CreateNotificationCommand command)
     { await mediator.Send(command); return StatusCode(201); }
 
+    [HttpGet("reports")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task<IActionResult> GetReports([FromQuery] GetReportsAdminQuery query)
+    => Ok(await mediator.Send(query));
+
 }
 
 

@@ -173,5 +173,26 @@ public class AdminProvider : IAdminProvider
         if (settings == null) throw new NotFoundException("Settings not found");
         return settings.Adapt<AdminSettingsDto>();
     }
-}
 
+    public async Task<IEnumerable<CourseReport>> GetReportsAdmin(bool? isResolved, int page, int pageSize)
+    {
+        var query = _context.CourseReports
+            .Include(r => r.User)
+            .Include(r => r.Course)
+            .AsQueryable();
+        if (isResolved.HasValue)
+            query = query.Where(r => r.IsResolved == isResolved.Value);
+        return await query.OrderByDescending(r => r.CreatedAt)
+            .Skip((page - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
+    }
+
+    public async Task<int> GetReportsAdminCount(bool? isResolved)
+    {
+        var query = _context.CourseReports.AsQueryable();
+        if (isResolved.HasValue)
+            query = query.Where(r => r.IsResolved == isResolved.Value);
+        return await query.CountAsync();
+    }
+}
