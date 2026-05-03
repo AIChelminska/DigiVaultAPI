@@ -118,6 +118,11 @@ public class AdminController(IMediator mediator) : ControllerBase
     public async Task<IActionResult> UpdateSettings([FromBody] UpdateSettingsCommand command)
     { await mediator.Send(command); return NoContent(); }
 
+    [HttpPost("notifications")]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    public async Task<IActionResult> CreateNotification([FromBody] CreateNotificationCommand command)
+    { await mediator.Send(command); return StatusCode(201); }
+
 }
 
 

@@ -193,4 +193,12 @@ public class AdminService : IAdminService
         settings.CommissionRate = commissionRate;
         await _context.SaveChangesAsync();
     }
+    
+    public async Task CreateNotification(Notification notification)
+    {
+        var user = await _context.Users.FirstOrDefaultAsync(u => u.IdUser == notification.IdUser);
+        if (user == null) throw new NotFoundException("User not found");
+        user.Notifications.Add(notification);
+        await _context.SaveChangesAsync();
+    }
 }
