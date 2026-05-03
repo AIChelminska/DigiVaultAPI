@@ -17,4 +17,5 @@ public interface IAdminService
     Task RemoveCourseFromOrder(int idOrder, int idCourse);
     Task UpdateSettings(decimal commissionRate);
     Task CreateNotification(Notification notification);
+    Task ResolveReport(int idCourseReport);
 }

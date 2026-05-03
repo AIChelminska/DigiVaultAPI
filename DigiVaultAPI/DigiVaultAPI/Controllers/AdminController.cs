@@ -128,6 +128,10 @@ public class AdminController(IMediator mediator) : ControllerBase
     public async Task<IActionResult> GetReports([FromQuery] GetReportsAdminQuery query)
     => Ok(await mediator.Send(query));
 
+    [HttpPut("reports/{idCourseReport}/resolve")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    public async Task<IActionResult> ResolveReport([FromRoute] int idCourseReport)
+    { await mediator.Send(new ResolveReportCommand { IdCourseReport = idCourseReport }); return NoContent(); }
 }
 
 

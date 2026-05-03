@@ -201,4 +201,12 @@ public class AdminService : IAdminService
         user.Notifications.Add(notification);
         await _context.SaveChangesAsync();
     }
+
+    public async Task ResolveReport(int idCourseReport)
+    {
+        var report = await _context.CourseReports.FirstOrDefaultAsync(r => r.IdCourseReport == idCourseReport);
+        if (report == null) throw new NotFoundException("Report not found");
+        report.IsResolved = true;
+        await _context.SaveChangesAsync();
+    }
 }
