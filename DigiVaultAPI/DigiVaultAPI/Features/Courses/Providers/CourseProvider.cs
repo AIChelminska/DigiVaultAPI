@@ -13,13 +13,16 @@ public class CourseProvider : ICourseProvider
         _context = context;
     }
 
-    public async Task<List<Course>> GetCourses(string? search, int? idCategory, decimal? minPrice, decimal? maxPrice, string? sortBy, int page, int pageSize, bool includeHidden = false)
+    public async Task<List<Course>> GetCourses(string? search, int? idCategory, decimal? minPrice, decimal? maxPrice, string? sortBy, int page, int pageSize, bool includeHidden = false, bool? isActive = null)
     {
 
         var query = _context.Courses
             .Include(c => c.User)
             .Include(c => c.Category)
             .Where(c => includeHidden || (c.IsActive && c.IsVisible));
+
+        if (isActive.HasValue)
+            query = query.Where(c => c.IsActive == isActive.Value);
 
         if (!string.IsNullOrWhiteSpace(search))
         {
@@ -54,10 +57,13 @@ public class CourseProvider : ICourseProvider
         return courses;
     }
 
-    public async Task<int> GetCoursesCount(string? search, int? idCategory, decimal? minPrice, decimal? maxPrice, bool includeHidden = false)
+    public async Task<int> GetCoursesCount(string? search, int? idCategory, decimal? minPrice, decimal? maxPrice, bool includeHidden = false, bool? isActive = null)
     {
         var query = _context.Courses
             .Where(c => includeHidden || (c.IsActive && c.IsVisible));
+
+        if (isActive.HasValue)
+            query = query.Where(c => c.IsActive == isActive.Value);
 
         if (!string.IsNullOrWhiteSpace(search))
         {

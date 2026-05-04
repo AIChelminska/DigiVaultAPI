@@ -30,7 +30,7 @@ public class AdminController(IMediator mediator) : ControllerBase
     [HttpGet("courses")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<IActionResult> GetCourses([FromQuery] GetCoursesQuery query)
-    => Ok(await mediator.Send(query));    
+    { query.IncludeHidden = true; return Ok(await mediator.Send(query)); }
 
     [HttpGet("orders")]
     [ProducesResponseType(StatusCodes.Status200OK)]
@@ -133,6 +133,3 @@ public class AdminController(IMediator mediator) : ControllerBase
     public async Task<IActionResult> ResolveReport([FromRoute] int idCourseReport)
     { await mediator.Send(new ResolveReportCommand { IdCourseReport = idCourseReport }); return NoContent(); }
 }
-
-
-

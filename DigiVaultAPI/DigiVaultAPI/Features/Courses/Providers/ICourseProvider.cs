@@ -4,8 +4,8 @@ namespace DigiVaultAPI.Features.Courses.Providers;
 
 public interface ICourseProvider
 {
-    Task<List<Course>> GetCourses(string? search, int? idCategory, decimal? minPrice, decimal? maxPrice, string? sortBy, int page, int pageSize, bool includeHidden = false);
-    Task<int> GetCoursesCount(string? search, int? idCategory, decimal? minPrice, decimal? maxPrice, bool includeHidden = false);
+    Task<List<Course>> GetCourses(string? search, int? idCategory, decimal? minPrice, decimal? maxPrice, string? sortBy, int page, int pageSize, bool includeHidden = false, bool? isActive = null);
+    Task<int> GetCoursesCount(string? search, int? idCategory, decimal? minPrice, decimal? maxPrice, bool includeHidden = false, bool? isActive = null);
     Task<Course?> GetCourseById(int idCourse);
     Task<Course?> GetCourseByIdForEdit(int idCourse);
     Task<List<Course>> GetPopularCourses(int limit);

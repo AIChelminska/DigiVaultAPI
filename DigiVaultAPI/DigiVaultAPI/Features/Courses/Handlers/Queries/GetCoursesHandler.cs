@@ -18,8 +18,8 @@ public class GetCoursesHandler : IRequestHandler<GetCoursesQuery, PagedResult<Co
     public async Task<PagedResult<CourseListDto>> Handle(GetCoursesQuery query, CancellationToken cancellationToken)
     {
         // 1. Pobierz stronę kursów i łączną liczbę
-        var courses = await _provider.GetCourses(query.Search, query.IdCategory, query.MinPrice, query.MaxPrice, query.SortBy, query.Page, query.PageSize, query.IncludeHidden);
-        var total   = await _provider.GetCoursesCount(query.Search, query.IdCategory, query.MinPrice, query.MaxPrice, query.IncludeHidden);
+        var courses = await _provider.GetCourses(query.Search, query.IdCategory, query.MinPrice, query.MaxPrice, query.SortBy, query.Page, query.PageSize, query.IncludeHidden, query.IsActive);
+        var total   = await _provider.GetCoursesCount(query.Search, query.IdCategory, query.MinPrice, query.MaxPrice, query.IncludeHidden, query.IsActive);
 
         // 2. Mapster: Course → CourseListDto
         var dtos = courses.Adapt<List<CourseListDto>>();
