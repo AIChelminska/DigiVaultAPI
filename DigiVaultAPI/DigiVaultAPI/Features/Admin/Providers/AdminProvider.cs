@@ -35,10 +35,16 @@ public class AdminProvider : IAdminProvider
         }
 
         if (dateFrom.HasValue)
-            query = query.Where(o => o.CreatedAt >= dateFrom.Value);
+        {
+            var from = DateTime.SpecifyKind(dateFrom.Value, DateTimeKind.Utc);
+            query = query.Where(o => o.CreatedAt >= from);
+        }
 
         if (dateTo.HasValue)
-            query = query.Where(o => o.CreatedAt <= dateTo.Value);
+        {
+            var to = DateTime.SpecifyKind(dateTo.Value.AddDays(1), DateTimeKind.Utc);
+            query = query.Where(o => o.CreatedAt < to);
+        }
 
         return await query
             .OrderByDescending(o => o.CreatedAt)
@@ -60,10 +66,16 @@ public class AdminProvider : IAdminProvider
         }
 
         if (dateFrom.HasValue)
-            query = query.Where(o => o.CreatedAt >= dateFrom.Value);
+        {
+            var from = DateTime.SpecifyKind(dateFrom.Value, DateTimeKind.Utc);
+            query = query.Where(o => o.CreatedAt >= from);
+        }
 
         if (dateTo.HasValue)
-            query = query.Where(o => o.CreatedAt <= dateTo.Value);
+        {
+            var to = DateTime.SpecifyKind(dateTo.Value.AddDays(1), DateTimeKind.Utc);
+            query = query.Where(o => o.CreatedAt < to);
+        }
 
         return await query.CountAsync();
     }
