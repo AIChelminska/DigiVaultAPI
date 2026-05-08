@@ -7,10 +7,14 @@
 ![Swagger](https://img.shields.io/badge/Swagger-7.2.0-85EA2D?logo=swagger&logoColor=black)
 ![License](https://img.shields.io/badge/license-MIT-green)
 ![Status](https://img.shields.io/badge/status-🚧_work_in_progress-yellow)
+[![Live API](https://img.shields.io/badge/Live_API-Swagger_UI-85EA2D?logo=swagger&logoColor=black)](https://digivaultapi.onrender.com/swagger)
 
 A RESTful back-end for **DigiVault** — a digital course marketplace where users can browse, purchase, and review courses, sellers can manage their own catalogue, and administrators can oversee users, orders, and platform operations.
 
 Built with **ASP.NET Core 9**, following a vertical-slice architecture using the CQRS pattern (MediatR).
+
+> **Try it live:** [https://digivaultapi.onrender.com/swagger](https://digivaultapi.onrender.com/swagger)  
+> The API is hosted on Render's free tier — the first request after a period of inactivity may take up to 50 seconds to respond (cold start). Subsequent requests are fast.
 
 ---
 
@@ -294,7 +298,7 @@ dotnet run --project DigiVaultAPI
 The API will be available at:
 - HTTP: `http://localhost:5052`
 - HTTPS: `https://localhost:7084`
-- Swagger UI: `http://localhost:5052/swagger` *(Development only)*
+- Swagger UI: `http://localhost:5052/swagger`
 
 ### Running with Docker
 
@@ -376,7 +380,7 @@ Authorization: Bearer <your_token>
 | `User` | Standard authenticated user — can buy courses, review, manage cart, etc. |
 | `Worker` | Administrator — has access to all `User` endpoints plus `/api/admin/*` |
 
-Swagger UI in Development includes a **Authorize** button for pasting a Bearer token directly.
+Swagger UI includes an **Authorize** button for pasting a Bearer token directly — available both locally and at the [live deployment](https://digivaultapi.onrender.com/swagger).
 
 ---
 
