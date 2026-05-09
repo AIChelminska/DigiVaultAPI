@@ -1,5 +1,6 @@
 using DigiVaultAPI.Features.Courses.Messages.Commands;
 using DigiVaultAPI.Features.Courses.Messages.Queries;
+using DigiVaultAPI.Features.Admin.Messages.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
