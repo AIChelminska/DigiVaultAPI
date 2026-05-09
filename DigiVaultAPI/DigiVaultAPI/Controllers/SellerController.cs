@@ -11,6 +11,16 @@ namespace DigiVaultAPI.Controllers;
 [Authorize]
 public class SellerController(IMediator mediator) : ControllerBase
 {
+    [HttpGet("courses/{idCourse}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetCourseById([FromRoute] int idCourse)
+    {
+        var idUser = int.Parse(User.FindFirst("IdUser")!.Value);
+        return Ok(await mediator.Send(new GetCourseByIdAdminQuery { IdCourse = idCourse }));
+    }
+
     [HttpGet("courses")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<IActionResult> GetMyCourses([FromQuery] int page = 1, [FromQuery] int pageSize = 10)
