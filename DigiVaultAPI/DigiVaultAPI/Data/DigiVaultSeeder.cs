@@ -23,6 +23,7 @@ public static class DigiVaultSeeder
         SeedUserCourses(db);
         SeedWishlistItems(db);
         ResetSequences(db);
+        SeedCMSContents(db);
     }
 
     private static void ResetSequences(DigiVaultDbContext db)
@@ -39,6 +40,7 @@ public static class DigiVaultSeeder
             SELECT setval(pg_get_serial_sequence('""CartItems""',     'IdCartItem'),     COALESCE(MAX(""IdCartItem""),     1)) FROM ""CartItems"";
             SELECT setval(pg_get_serial_sequence('""UserCourses""',   'IdUserCourse'),   COALESCE(MAX(""IdUserCourse""),   1)) FROM ""UserCourses"";
             SELECT setval(pg_get_serial_sequence('""WishlistItems""', 'IdWishlistItem'), COALESCE(MAX(""IdWishlistItem""), 1)) FROM ""WishlistItems"";
+            SELECT setval(pg_get_serial_sequence('""CMSContents""',   'IdContent'),    COALESCE(MAX(""IdContent""),      1)) FROM ""CMSContents"";
         ");
     }
 
@@ -330,6 +332,26 @@ public static class DigiVaultSeeder
         db.WishlistItems.AddRange(
             new WishlistItem { IdWishlistItem = 11, IdUser = 2, IdCourse = 48, AddedAt = new DateTimeOffset(2026, 3, 24, 12, 45, 59, TimeSpan.Zero).UtcDateTime },
             new WishlistItem { IdWishlistItem = 23, IdUser = 2, IdCourse = 38, AddedAt = new DateTimeOffset(2026, 4, 18,  6, 42, 29, TimeSpan.Zero).UtcDateTime }
+        );
+        db.SaveChanges();
+    }
+
+    private static void SeedCMSContents(DigiVaultDbContext db)
+    {
+        if (db.CMSContents.Any()) return;
+
+        var t = new DateTimeOffset(2026, 3, 24, 12, 45, 59, TimeSpan.Zero).UtcDateTime;
+
+        db.CMSContents.AddRange(
+            new CMSContent { IdContent = 1, Key = "platform_name", Title = "Nazwa platformy", Value = "DigiVault", LastUpdated = t },
+            new CMSContent { IdContent = 2, Key = "platform_description", Title = "Krótki opis platformy", Value = "Platforma do kupowania i sprzedawania kursów online.", LastUpdated = t },
+            new CMSContent { IdContent = 3, Key = "home.hero.title", Title = "Strona główna — nagłówek powitalny", Value = "Odkryj kursy, które zmienią Twoją karierę", LastUpdated = t },
+            new CMSContent { IdContent = 4, Key = "home.hero.subtitle", Title = "Strona główna — podtytuł", Value = "Najlepsze kursy od praktyków branżowych.", LastUpdated = t },
+            new CMSContent { IdContent = 5, Key = "footer.copyright", Title = "Stopka — prawa autorskie", Value = "© 2026 — Wszystkie prawa zastrzeżone", LastUpdated = t },
+            new CMSContent { IdContent = 6, Key = "about.description", Title = "O nas — treść", Value = "DigiVault to platforma e-learningowa łącząca studentów z ekspertami.", LastUpdated = t },
+            new CMSContent { IdContent = 7, Key = "terms.content", Title = "Regulamin — treść", Value = "Korzystając z DigiVault akceptujesz niniejszy regulamin. Zamówienia kursów są realizowane elektronicznie.", LastUpdated = t },
+            new CMSContent { IdContent = 8, Key = "privacy.content", Title = "Polityka prywatności — treść", Value = "Administratorem danych jest DigiVault. Dane przetwarzamy w celu realizacji zamówień i obsługi konta użytkownika.", LastUpdated = t },
+            new CMSContent { IdContent = 9, Key = "contact.info", Title = "Kontakt — treść", Value = "Kontakt z zespołem: support@digivault.example", LastUpdated = t }
         );
         db.SaveChanges();
     }

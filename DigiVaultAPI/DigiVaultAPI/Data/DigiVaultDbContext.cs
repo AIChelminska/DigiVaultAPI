@@ -21,6 +21,7 @@ public class DigiVaultDbContext : DbContext
     public DbSet<Notification> Notifications { get; set; }
     public DbSet<CourseReport> CourseReports { get; set; }
     public DbSet<PlatformSettings> PlatformSettings { get; set; }
+    public DbSet<CMSContent> CMSContents { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -231,6 +232,19 @@ public class DigiVaultDbContext : DbContext
 
             entity.Property(ps => ps.CommissionRate).HasColumnType("decimal(5,4)");
             entity.Property(ps => ps.PlatformBalance).HasColumnType("decimal(14,2)");
+        });
+
+        // ── CMS CONTENT ───────────────────────────────────────────────────────
+        modelBuilder.Entity<CMSContent>(entity =>
+        {
+            entity.HasKey(cc => cc.IdContent);
+
+            entity.HasIndex(cc => cc.Key).IsUnique();
+
+            entity.Property(cc => cc.Key).HasMaxLength(100).IsRequired();
+            entity.Property(cc => cc.Title).HasMaxLength(200).IsRequired();
+            entity.Property(cc => cc.Value).IsRequired();
+            entity.Property(cc => cc.LastUpdated).HasDefaultValueSql("NOW()");
         });
     }
 }
