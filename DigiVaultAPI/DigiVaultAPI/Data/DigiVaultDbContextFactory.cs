@@ -19,7 +19,8 @@ public class DigiVaultDbContextFactory : IDesignTimeDbContextFactory<DigiVaultDb
             .AddUserSecrets(typeof(DigiVaultDbContextFactory).Assembly, optional: true)
             .Build();
 
-        var connectionString = configuration.GetConnectionString("DefaultConnection");
+        var raw = configuration.GetConnectionString("DefaultConnection");
+        var connectionString = PostgresConnectionStringNormalizer.ForNpgsql(raw);
         if (string.IsNullOrWhiteSpace(connectionString))
         {
             throw new InvalidOperationException(

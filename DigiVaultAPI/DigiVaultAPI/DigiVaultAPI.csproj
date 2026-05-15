@@ -4,6 +4,7 @@
     <TargetFramework>net9.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>digi-vault-api-ef-design-9f2c4a1e-8b3d-4c7a-9e1f-2d8a6b5c4e3f</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

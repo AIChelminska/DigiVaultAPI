@@ -67,7 +67,8 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 // EF Core — PostgreSQL
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+var connectionString = PostgresConnectionStringNormalizer.ForNpgsql(
+    builder.Configuration.GetConnectionString("DefaultConnection"));
 builder.Services.AddDbContext<DigiVaultDbContext>(options =>
     options.UseNpgsql(connectionString));
 
