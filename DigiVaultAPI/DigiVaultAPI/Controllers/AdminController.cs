@@ -153,4 +153,9 @@ public class AdminController(IMediator mediator) : ControllerBase
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<IActionResult> UpdateCmsContent([FromRoute] int idContent, [FromBody] UpdateCmsContentCommand command)
     { command.IdContent = idContent; await mediator.Send(command); return NoContent(); }
+
+    [HttpDelete("cms/{idContent}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    public async Task<IActionResult> DeleteCmsContent([FromRoute] int idContent)
+    { await mediator.Send(new DeleteCmsContentCommand { IdContent = idContent }); return NoContent(); }
 }
