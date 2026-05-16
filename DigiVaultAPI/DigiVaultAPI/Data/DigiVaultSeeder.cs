@@ -344,15 +344,13 @@ public static class DigiVaultSeeder
         var t = new DateTimeOffset(2026, 3, 24, 12, 45, 59, TimeSpan.Zero).UtcDateTime;
 
         db.CMSContents.AddRange(
-            new CMSContent { IdContent = 1, Key = "platform_name", Title = "Platform name", Value = "DigiVault", LastUpdated = t },
-            new CMSContent { IdContent = 2, Key = "platform_description", Title = "Platform short description", Value = "A marketplace for buying and selling online IT courses.", LastUpdated = t },
-            new CMSContent { IdContent = 3, Key = "home.hero.title", Title = "Home — hero headline", Value = "Discover courses that will transform your career", LastUpdated = t },
-            new CMSContent { IdContent = 4, Key = "home.hero.subtitle", Title = "Home — hero subtitle", Value = "Top courses taught by industry practitioners.", LastUpdated = t },
-            new CMSContent { IdContent = 5, Key = "footer.copyright", Title = "Footer — copyright", Value = "© 2026 — All rights reserved", LastUpdated = t },
-            new CMSContent { IdContent = 6, Key = "about.description", Title = "About — content", Value = "DigiVault is an e-learning platform connecting students with industry experts.", LastUpdated = t },
-            new CMSContent { IdContent = 7, Key = "terms.content", Title = "Terms of service — content", Value = "By using DigiVault you accept these terms of service. Course orders are fulfilled electronically.", LastUpdated = t },
-            new CMSContent { IdContent = 8, Key = "privacy.content", Title = "Privacy policy — content", Value = "DigiVault is the data controller. We process personal data to fulfill orders and manage user accounts.", LastUpdated = t },
-            new CMSContent { IdContent = 9, Key = "contact.info", Title = "Contact — content", Value = "Contact our team: support@digivault.example", LastUpdated = t }
+            new CMSContent { IdContent = 1, Key = "home.hero.title", Title = "Home — hero headline", Value = "Discover courses that will transform your career", LastUpdated = t },
+            new CMSContent { IdContent = 2, Key = "home.hero.subtitle", Title = "Home — hero subtitle", Value = "Top courses taught by industry practitioners.", LastUpdated = t },
+            new CMSContent { IdContent = 3, Key = "footer.copyright", Title = "Footer — copyright", Value = "© 2026 — All rights reserved", LastUpdated = t },
+            new CMSContent { IdContent = 4, Key = "about.description", Title = "About — content", Value = "DigiVault is an e-learning platform connecting students with industry experts.", LastUpdated = t },
+            new CMSContent { IdContent = 5, Key = "terms.content", Title = "Terms of service — content", Value = "By using DigiVault you accept these terms of service. Course orders are fulfilled electronically.", LastUpdated = t },
+            new CMSContent { IdContent = 6, Key = "privacy.content", Title = "Privacy policy — content", Value = "DigiVault is the data controller. We process personal data to fulfill orders and manage user accounts.", LastUpdated = t },
+            new CMSContent { IdContent = 7, Key = "contact.info", Title = "Contact — content", Value = "Contact our team: support@digivault.example", LastUpdated = t }
         );
         db.SaveChanges();
     }
@@ -362,8 +360,6 @@ public static class DigiVaultSeeder
     {
         var english = new Dictionary<string, (string Title, string Value)>
         {
-            ["platform_name"] = ("Platform name", "DigiVault"),
-            ["platform_description"] = ("Platform short description", "A marketplace for buying and selling online IT courses."),
             ["home.hero.title"] = ("Home — hero headline", "Discover courses that will transform your career"),
             ["home.hero.subtitle"] = ("Home — hero subtitle", "Top courses taught by industry practitioners."),
             ["footer.copyright"] = ("Footer — copyright", "© 2026 — All rights reserved"),
