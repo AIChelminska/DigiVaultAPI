@@ -235,13 +235,4 @@ public class AdminService : IAdminService
         content.LastUpdated = DateTime.UtcNow;
         await _context.SaveChangesAsync();
     }
-
-    public async Task DeleteCmsContent(int idContent)
-    {
-        var content = await _context.CMSContents.FirstOrDefaultAsync(c => c.IdContent == idContent);
-        if (content == null) throw new NotFoundException("CMS content not found");
-
-        _context.CMSContents.Remove(content);
-        await _context.SaveChangesAsync();
-    }
 }

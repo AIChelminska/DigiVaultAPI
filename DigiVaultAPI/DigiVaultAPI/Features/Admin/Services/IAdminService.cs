@@ -20,5 +20,4 @@ public interface IAdminService
     Task ResolveReport(int idCourseReport);
     Task CreateCmsContent(string key, string title, string value);
     Task UpdateCmsContent(int idContent, string title, string value);
-    Task DeleteCmsContent(int idContent);
 }
