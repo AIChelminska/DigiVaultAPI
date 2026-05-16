@@ -209,4 +209,39 @@ public class AdminService : IAdminService
         report.IsResolved = true;
         await _context.SaveChangesAsync();
     }
+
+    public async Task CreateCmsContent(string key, string title, string value)
+    {
+        var exists = await _context.CMSContents.AnyAsync(c => c.Key == key);
+        if (exists) throw new ConflictException("CMS content with this key already exists");
+
+        _context.CMSContents.Add(new CMSContent
+        {
+            Key = key,
+            Title = title,
+            Value = value,
+            LastUpdated = DateTime.UtcNow
+        });
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task UpdateCmsContent(int idContent, string title, string value)
+    {
+        var content = await _context.CMSContents.FirstOrDefaultAsync(c => c.IdContent == idContent);
+        if (content == null) throw new NotFoundException("CMS content not found");
+
+        content.Title = title;
+        content.Value = value;
+        content.LastUpdated = DateTime.UtcNow;
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task DeleteCmsContent(int idContent)
+    {
+        var content = await _context.CMSContents.FirstOrDefaultAsync(c => c.IdContent == idContent);
+        if (content == null) throw new NotFoundException("CMS content not found");
+
+        _context.CMSContents.Remove(content);
+        await _context.SaveChangesAsync();
+    }
 }

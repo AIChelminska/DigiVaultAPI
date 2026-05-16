@@ -37,5 +37,7 @@ public class AdminMappingConfig : IRegister
         config.NewConfig<CourseReport, AdminReportDto>()
             .Map(dest => dest.CourseTitle, src => src.Course.Title)
             .Map(dest => dest.ReportedBy, src => src.User.FirstName + " " + src.User.LastName);
+
+        config.NewConfig<CMSContent, AdminCmsContentDto>();
     }
 }

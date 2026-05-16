@@ -132,4 +132,30 @@ public class AdminController(IMediator mediator) : ControllerBase
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<IActionResult> ResolveReport([FromRoute] int idCourseReport)
     { await mediator.Send(new ResolveReportCommand { IdCourseReport = idCourseReport }); return NoContent(); }
+
+    [HttpGet("cms")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task<IActionResult> GetCmsContents([FromQuery] GetCmsContentsAdminQuery query)
+        => Ok(await mediator.Send(query));
+
+    [HttpGet("cms/{idContent}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetCmsContentById([FromRoute] int idContent)
+        => Ok(await mediator.Send(new GetCmsContentByIdAdminQuery { IdContent = idContent }));
+
+    [HttpPost("cms")]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    public async Task<IActionResult> CreateCmsContent([FromBody] CreateCmsContentCommand command)
+    { await mediator.Send(command); return StatusCode(201); }
+
+    [HttpPut("cms/{idContent}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    public async Task<IActionResult> UpdateCmsContent([FromRoute] int idContent, [FromBody] UpdateCmsContentCommand command)
+    { command.IdContent = idContent; await mediator.Send(command); return NoContent(); }
+
+    [HttpDelete("cms/{idContent}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    public async Task<IActionResult> DeleteCmsContent([FromRoute] int idContent)
+    { await mediator.Send(new DeleteCmsContentCommand { IdContent = idContent }); return NoContent(); }
 }

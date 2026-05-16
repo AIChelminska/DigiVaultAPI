@@ -19,4 +19,7 @@ public interface IAdminProvider
     Task<AdminSettingsDto> GetSettings();
     Task<IEnumerable<CourseReport>> GetReportsAdmin(bool? isResolved, int page, int pageSize);
     Task<int> GetReportsAdminCount(bool? isResolved);
+    Task<IEnumerable<CMSContent>> GetCmsContents(int page, int pageSize, string? search);
+    Task<int> GetCmsContentsCount(string? search);
+    Task<CMSContent?> GetCmsContentById(int idContent);
 }

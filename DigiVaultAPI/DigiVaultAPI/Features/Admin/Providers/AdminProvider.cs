@@ -207,4 +207,45 @@ public class AdminProvider : IAdminProvider
             query = query.Where(r => r.IsResolved == isResolved.Value);
         return await query.CountAsync();
     }
+
+    public async Task<IEnumerable<CMSContent>> GetCmsContents(int page, int pageSize, string? search)
+    {
+        var query = _context.CMSContents.AsQueryable();
+
+        if (!string.IsNullOrWhiteSpace(search))
+        {
+            var lower = search.ToLower();
+            query = query.Where(c =>
+                c.Key.ToLower().Contains(lower) ||
+                c.Title.ToLower().Contains(lower) ||
+                c.Value.ToLower().Contains(lower));
+        }
+
+        return await query
+            .OrderBy(c => c.Key)
+            .Skip((page - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
+    }
+
+    public async Task<int> GetCmsContentsCount(string? search)
+    {
+        var query = _context.CMSContents.AsQueryable();
+
+        if (!string.IsNullOrWhiteSpace(search))
+        {
+            var lower = search.ToLower();
+            query = query.Where(c =>
+                c.Key.ToLower().Contains(lower) ||
+                c.Title.ToLower().Contains(lower) ||
+                c.Value.ToLower().Contains(lower));
+        }
+
+        return await query.CountAsync();
+    }
+
+    public async Task<CMSContent?> GetCmsContentById(int idContent)
+    {
+        return await _context.CMSContents.FirstOrDefaultAsync(c => c.IdContent == idContent);
+    }
 }

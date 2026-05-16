@@ -6,6 +6,7 @@ using DigiVaultAPI.Features.Courses.Mappings;
 using DigiVaultAPI.Features.Courses.Providers;
 using DigiVaultAPI.Features.Courses.Services;
 using DigiVaultAPI.Features.Categories.Providers;
+using DigiVaultAPI.Features.Cms.Providers;
 using DigiVaultAPI.Features.Wishlist.Providers;
 using DigiVaultAPI.Features.Wishlist.Services;
 using DigiVaultAPI.Features.Cart.Providers;
@@ -98,6 +99,9 @@ builder.Services.AddScoped<ICourseService, CourseService>();
 
 //Categories
 builder.Services.AddScoped<ICategoryProvider, CategoryProvider>();
+
+// CMS
+builder.Services.AddScoped<ICmsProvider, CmsProvider>();
 
 //Wishlist
 builder.Services.AddScoped<IWishlistProvider, WishlistProvider>();
