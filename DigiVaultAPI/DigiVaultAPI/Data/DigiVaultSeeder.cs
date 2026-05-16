@@ -24,6 +24,7 @@ public static class DigiVaultSeeder
         SeedWishlistItems(db);
         ResetSequences(db);
         SeedCMSContents(db);
+        ApplyCmsEnglishContent(db);
     }
 
     private static void ResetSequences(DigiVaultDbContext db)
@@ -343,16 +344,47 @@ public static class DigiVaultSeeder
         var t = new DateTimeOffset(2026, 3, 24, 12, 45, 59, TimeSpan.Zero).UtcDateTime;
 
         db.CMSContents.AddRange(
-            new CMSContent { IdContent = 1, Key = "platform_name", Title = "Nazwa platformy", Value = "DigiVault", LastUpdated = t },
-            new CMSContent { IdContent = 2, Key = "platform_description", Title = "Krótki opis platformy", Value = "Platforma do kupowania i sprzedawania kursów online.", LastUpdated = t },
-            new CMSContent { IdContent = 3, Key = "home.hero.title", Title = "Strona główna — nagłówek powitalny", Value = "Odkryj kursy, które zmienią Twoją karierę", LastUpdated = t },
-            new CMSContent { IdContent = 4, Key = "home.hero.subtitle", Title = "Strona główna — podtytuł", Value = "Najlepsze kursy od praktyków branżowych.", LastUpdated = t },
-            new CMSContent { IdContent = 5, Key = "footer.copyright", Title = "Stopka — prawa autorskie", Value = "© 2026 — Wszystkie prawa zastrzeżone", LastUpdated = t },
-            new CMSContent { IdContent = 6, Key = "about.description", Title = "O nas — treść", Value = "DigiVault to platforma e-learningowa łącząca studentów z ekspertami.", LastUpdated = t },
-            new CMSContent { IdContent = 7, Key = "terms.content", Title = "Regulamin — treść", Value = "Korzystając z DigiVault akceptujesz niniejszy regulamin. Zamówienia kursów są realizowane elektronicznie.", LastUpdated = t },
-            new CMSContent { IdContent = 8, Key = "privacy.content", Title = "Polityka prywatności — treść", Value = "Administratorem danych jest DigiVault. Dane przetwarzamy w celu realizacji zamówień i obsługi konta użytkownika.", LastUpdated = t },
-            new CMSContent { IdContent = 9, Key = "contact.info", Title = "Kontakt — treść", Value = "Kontakt z zespołem: support@digivault.example", LastUpdated = t }
+            new CMSContent { IdContent = 1, Key = "platform_name", Title = "Platform name", Value = "DigiVault", LastUpdated = t },
+            new CMSContent { IdContent = 2, Key = "platform_description", Title = "Platform short description", Value = "A marketplace for buying and selling online IT courses.", LastUpdated = t },
+            new CMSContent { IdContent = 3, Key = "home.hero.title", Title = "Home — hero headline", Value = "Discover courses that will transform your career", LastUpdated = t },
+            new CMSContent { IdContent = 4, Key = "home.hero.subtitle", Title = "Home — hero subtitle", Value = "Top courses taught by industry practitioners.", LastUpdated = t },
+            new CMSContent { IdContent = 5, Key = "footer.copyright", Title = "Footer — copyright", Value = "© 2026 — All rights reserved", LastUpdated = t },
+            new CMSContent { IdContent = 6, Key = "about.description", Title = "About — content", Value = "DigiVault is an e-learning platform connecting students with industry experts.", LastUpdated = t },
+            new CMSContent { IdContent = 7, Key = "terms.content", Title = "Terms of service — content", Value = "By using DigiVault you accept these terms of service. Course orders are fulfilled electronically.", LastUpdated = t },
+            new CMSContent { IdContent = 8, Key = "privacy.content", Title = "Privacy policy — content", Value = "DigiVault is the data controller. We process personal data to fulfill orders and manage user accounts.", LastUpdated = t },
+            new CMSContent { IdContent = 9, Key = "contact.info", Title = "Contact — content", Value = "Contact our team: support@digivault.example", LastUpdated = t }
         );
         db.SaveChanges();
+    }
+
+    /// <summary>Updates existing CMS rows to English (e.g. after seed was run with Polish text).</summary>
+    private static void ApplyCmsEnglishContent(DigiVaultDbContext db)
+    {
+        var english = new Dictionary<string, (string Title, string Value)>
+        {
+            ["platform_name"] = ("Platform name", "DigiVault"),
+            ["platform_description"] = ("Platform short description", "A marketplace for buying and selling online IT courses."),
+            ["home.hero.title"] = ("Home — hero headline", "Discover courses that will transform your career"),
+            ["home.hero.subtitle"] = ("Home — hero subtitle", "Top courses taught by industry practitioners."),
+            ["footer.copyright"] = ("Footer — copyright", "© 2026 — All rights reserved"),
+            ["about.description"] = ("About — content", "DigiVault is an e-learning platform connecting students with industry experts."),
+            ["terms.content"] = ("Terms of service — content", "By using DigiVault you accept these terms of service. Course orders are fulfilled electronically."),
+            ["privacy.content"] = ("Privacy policy — content", "DigiVault is the data controller. We process personal data to fulfill orders and manage user accounts."),
+            ["contact.info"] = ("Contact — content", "Contact our team: support@digivault.example"),
+        };
+
+        var changed = false;
+        foreach (var row in db.CMSContents.ToList())
+        {
+            if (!english.TryGetValue(row.Key, out var en)) continue;
+            if (row.Title == en.Title && row.Value == en.Value) continue;
+            row.Title = en.Title;
+            row.Value = en.Value;
+            row.LastUpdated = DateTime.UtcNow;
+            changed = true;
+        }
+
+        if (changed)
+            db.SaveChanges();
     }
 }
