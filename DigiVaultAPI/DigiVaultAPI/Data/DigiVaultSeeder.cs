@@ -24,7 +24,6 @@ public static class DigiVaultSeeder
         SeedWishlistItems(db);
         ResetSequences(db);
         SeedCMSContents(db);
-        ApplyCmsEnglishContent(db);
     }
 
     private static void ResetSequences(DigiVaultDbContext db)
@@ -353,34 +352,5 @@ public static class DigiVaultSeeder
             new CMSContent { IdContent = 7, Key = "contact.info", Title = "Contact — content", Value = "Contact our team: support@digivault.example", LastUpdated = t }
         );
         db.SaveChanges();
-    }
-
-    /// <summary>Updates existing CMS rows to English (e.g. after seed was run with Polish text).</summary>
-    private static void ApplyCmsEnglishContent(DigiVaultDbContext db)
-    {
-        var english = new Dictionary<string, (string Title, string Value)>
-        {
-            ["home.hero.title"] = ("Home — hero headline", "Discover courses that will transform your career"),
-            ["home.hero.subtitle"] = ("Home — hero subtitle", "Top courses taught by industry practitioners."),
-            ["footer.copyright"] = ("Footer — copyright", "© 2026 — All rights reserved"),
-            ["about.description"] = ("About — content", "DigiVault is an e-learning platform connecting students with industry experts."),
-            ["terms.content"] = ("Terms of service — content", "By using DigiVault you accept these terms of service. Course orders are fulfilled electronically."),
-            ["privacy.content"] = ("Privacy policy — content", "DigiVault is the data controller. We process personal data to fulfill orders and manage user accounts."),
-            ["contact.info"] = ("Contact — content", "Contact our team: support@digivault.example"),
-        };
-
-        var changed = false;
-        foreach (var row in db.CMSContents.ToList())
-        {
-            if (!english.TryGetValue(row.Key, out var en)) continue;
-            if (row.Title == en.Title && row.Value == en.Value) continue;
-            row.Title = en.Title;
-            row.Value = en.Value;
-            row.LastUpdated = DateTime.UtcNow;
-            changed = true;
-        }
-
-        if (changed)
-            db.SaveChanges();
     }
 }
